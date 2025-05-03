@@ -36,10 +36,10 @@ declare global {
   interface Window {
     electron: {
       ipcRenderer: {
-        send: (channel: string, data?: any) => void;
-        on: (channel: string, func: (...args: any[]) => void) => void;
-        removeListener: (channel: string, func: (...args: any[]) => void) => void;
-        invoke: (channel: string, ...args: any[]) => Promise<any>;
+        send: ( channel: string, data?: any ) => void;
+        on: ( channel: string, func: ( ...args: any[] ) => void ) => void;
+        removeListener: ( channel: string, func: ( ...args: any[] ) => void ) => void;
+        invoke: ( channel: string, ...args: any[] ) => Promise<any>;
       };
     };
   }
@@ -71,18 +71,18 @@ const STORAGE_KEYS = {
  */
 const App = (): JSX.Element => {
   /* ============================== STATE: Load initial state from localStorage ============================== */
-  const savedFolder = localStorage.getItem(STORAGE_KEYS.SELECTED_FOLDER);
-  const savedFiles = localStorage.getItem(STORAGE_KEYS.SELECTED_FILES);
-  const savedSortOrder = localStorage.getItem(STORAGE_KEYS.SORT_ORDER);
-  const savedSearchTerm = localStorage.getItem(STORAGE_KEYS.SEARCH_TERM);
+  const savedFolder = localStorage.getItem( STORAGE_KEYS.SELECTED_FOLDER );
+  const savedFiles = localStorage.getItem( STORAGE_KEYS.SELECTED_FILES );
+  const savedSortOrder = localStorage.getItem( STORAGE_KEYS.SORT_ORDER );
+  const savedSearchTerm = localStorage.getItem( STORAGE_KEYS.SEARCH_TERM );
   // const savedIgnoreMode = localStorage.getItem(STORAGE_KEYS.IGNORE_MODE); no longer needed
 
   /* ============================== STATE: Core App State ============================== */
   const [selectedFolder, setSelectedFolder] = useState(
-    savedFolder ? normalizePath(savedFolder) : null
+    savedFolder ? normalizePath( savedFolder ) : null
   );
   const isElectron = window.electron !== undefined;
-  const [allFiles, setAllFiles] = useState([] as FileData[]);
+  const [allFiles, setAllFiles] = useState( [] as FileData[] );
 
   /* ============================== STATE: Ignore Patterns ============================== */
   const {
@@ -95,239 +95,239 @@ const App = (): JSX.Element => {
     customIgnores,
     ignoreSettingsModified,
     resetIgnoreSettingsModified,
-  } = useIgnorePatterns(selectedFolder, isElectron);
+  } = useIgnorePatterns( selectedFolder, isElectron );
 
   /* ============================== STATE: File Selection and Sorting ============================== */
   const [selectedFiles, setSelectedFiles] = useState(
-    (savedFiles ? JSON.parse(savedFiles).map(normalizePath) : []) as string[]
+    ( savedFiles ? JSON.parse( savedFiles ).map( normalizePath ) : [] ) as string[]
   );
-  const [sortOrder, setSortOrder] = useState(savedSortOrder || 'tokens-desc');
-  const [searchTerm, setSearchTerm] = useState(savedSearchTerm || '');
-  const [expandedNodes, setExpandedNodes] = useState({} as Record<string, boolean>);
-  const [displayedFiles, setDisplayedFiles] = useState([] as FileData[]);
-  const [processingStatus, setProcessingStatus] = useState({ status: 'idle', message: '' } as {
+  const [sortOrder, setSortOrder] = useState( savedSortOrder || 'tokens-desc' );
+  const [searchTerm, setSearchTerm] = useState( savedSearchTerm || '' );
+  const [expandedNodes, setExpandedNodes] = useState( {} as Record<string, boolean> );
+  const [displayedFiles, setDisplayedFiles] = useState( [] as FileData[] );
+  const [processingStatus, setProcessingStatus] = useState( { status: 'idle', message: '' } as {
     status: 'idle' | 'processing' | 'complete' | 'error';
     message: string;
-  });
-  const [includeFileTree, setIncludeFileTree] = useState(false);
+  } );
+  const [includeFileTree, setIncludeFileTree] = useState( false );
   const [includeBinaryPaths, setIncludeBinaryPaths] = useState(
-    localStorage.getItem(STORAGE_KEYS.INCLUDE_BINARY_PATHS) === 'true'
+    localStorage.getItem( STORAGE_KEYS.INCLUDE_BINARY_PATHS ) === 'true'
   );
 
   /* ============================== STATE: UI Controls ============================== */
-  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
-  const [isSafeMode, setIsSafeMode] = useState(false);
+  const [sortDropdownOpen, setSortDropdownOpen] = useState( false );
+  const [isSafeMode, setIsSafeMode] = useState( false );
 
   /* ============================== STATE: User Instructions ============================== */
-  const [userInstructions, setUserInstructions] = useState('');
+  const [userInstructions, setUserInstructions] = useState( '' );
 
   // Utility function to clear all saved state and reset the app
-  const clearSavedState = useCallback(() => {
-    console.time('clearSavedState');
+  const clearSavedState = useCallback( () => {
+    console.time( 'clearSavedState' );
     // Clear all localStorage items except ignore mode, custom ignores, and ignore settings modified flag
-    Object.values(STORAGE_KEYS).forEach((key) => {
-      if (key !== STORAGE_KEYS.IGNORE_MODE && key !== STORAGE_KEYS.IGNORE_SETTINGS_MODIFIED) {
-        localStorage.removeItem(key);
+    Object.values( STORAGE_KEYS ).forEach( ( key ) => {
+      if ( key !== STORAGE_KEYS.IGNORE_MODE && key !== STORAGE_KEYS.IGNORE_SETTINGS_MODIFIED ) {
+        localStorage.removeItem( key );
       }
-    });
+    } );
 
     // Clear any session storage items
-    sessionStorage.removeItem('hasLoadedInitialData');
+    sessionStorage.removeItem( 'hasLoadedInitialData' );
 
     // Reset all state to initial values
-    setSelectedFolder(null);
-    setAllFiles([]);
-    setSelectedFiles([]);
-    setDisplayedFiles([]);
-    setSearchTerm('');
-    setSortOrder('tokens-desc');
-    setExpandedNodes({});
-    setIncludeFileTree(false);
-    setProcessingStatus({ status: 'idle', message: 'All saved data cleared' });
+    setSelectedFolder( null );
+    setAllFiles( [] );
+    setSelectedFiles( [] );
+    setDisplayedFiles( [] );
+    setSearchTerm( '' );
+    setSortOrder( 'tokens-desc' );
+    setExpandedNodes( {} );
+    setIncludeFileTree( false );
+    setProcessingStatus( { status: 'idle', message: 'All saved data cleared' } );
 
     // Also cancel any ongoing directory loading and clear main process caches
-    if (isElectron) {
-      window.electron.ipcRenderer.send('cancel-directory-loading');
-      window.electron.ipcRenderer.send('clear-main-cache');
+    if ( isElectron ) {
+      window.electron.ipcRenderer.send( 'cancel-directory-loading' );
+      window.electron.ipcRenderer.send( 'clear-main-cache' );
     }
 
-    console.log('All saved state cleared');
+    console.log( 'All saved state cleared' );
 
     // Reload the application window
-    console.timeEnd('clearSavedState');
+    console.timeEnd( 'clearSavedState' );
     window.location.reload();
-  }, [isElectron]); // Added isElectron dependency
+  }, [isElectron] ); // Added isElectron dependency
 
   /* ============================== EFFECTS ============================== */
 
   // Load expanded nodes state from localStorage
-  useEffect(() => {
-    const savedExpandedNodes = localStorage.getItem(STORAGE_KEYS.EXPANDED_NODES);
-    if (savedExpandedNodes) {
+  useEffect( () => {
+    const savedExpandedNodes = localStorage.getItem( STORAGE_KEYS.EXPANDED_NODES );
+    if ( savedExpandedNodes ) {
       try {
-        setExpandedNodes(JSON.parse(savedExpandedNodes));
-      } catch (error) {
-        console.error('Error parsing saved expanded nodes:', error);
+        setExpandedNodes( JSON.parse( savedExpandedNodes ) );
+      } catch ( error ) {
+        console.error( 'Error parsing saved expanded nodes:', error );
       }
     }
-  }, []);
+  }, [] );
 
   // Persist selected folder when it changes
-  useEffect(() => {
-    if (selectedFolder) {
-      localStorage.setItem(STORAGE_KEYS.SELECTED_FOLDER, selectedFolder);
+  useEffect( () => {
+    if ( selectedFolder ) {
+      localStorage.setItem( STORAGE_KEYS.SELECTED_FOLDER, selectedFolder );
     } else {
-      localStorage.removeItem(STORAGE_KEYS.SELECTED_FOLDER);
+      localStorage.removeItem( STORAGE_KEYS.SELECTED_FOLDER );
     }
-  }, [selectedFolder]);
+  }, [selectedFolder] );
 
   // Persist selected files when they change
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.SELECTED_FILES, JSON.stringify(selectedFiles));
-  }, [selectedFiles]);
+  useEffect( () => {
+    localStorage.setItem( STORAGE_KEYS.SELECTED_FILES, JSON.stringify( selectedFiles ) );
+  }, [selectedFiles] );
 
   // Persist sort order when it changes
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.SORT_ORDER, sortOrder);
-  }, [sortOrder]);
+  useEffect( () => {
+    localStorage.setItem( STORAGE_KEYS.SORT_ORDER, sortOrder );
+  }, [sortOrder] );
 
   // Persist search term when it changes
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.SEARCH_TERM, searchTerm);
-  }, [searchTerm]);
+  useEffect( () => {
+    localStorage.setItem( STORAGE_KEYS.SEARCH_TERM, searchTerm );
+  }, [searchTerm] );
 
   // Persist ignore mode when it changes
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.IGNORE_MODE, ignoreMode);
-  }, [ignoreMode]);
+  useEffect( () => {
+    localStorage.setItem( STORAGE_KEYS.IGNORE_MODE, ignoreMode );
+  }, [ignoreMode] );
 
   // Persist includeBinaryPaths when it changes
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.INCLUDE_BINARY_PATHS, String(includeBinaryPaths));
-  }, [includeBinaryPaths]);
+  useEffect( () => {
+    localStorage.setItem( STORAGE_KEYS.INCLUDE_BINARY_PATHS, String( includeBinaryPaths ) );
+  }, [includeBinaryPaths] );
 
   // Effect to add/remove binary files from selection when includeBinaryPaths changes
-  useEffect(() => {
-    if (includeBinaryPaths) {
+  useEffect( () => {
+    if ( includeBinaryPaths ) {
       const binaryFilePaths = allFiles
-        .filter((f: FileData) => f.isBinary)
-        .map((f: FileData) => f.path);
+        .filter( ( f: FileData ) => f.isBinary )
+        .map( ( f: FileData ) => f.path );
 
-      setSelectedFiles((prev: string[]) => {
+      setSelectedFiles( ( prev: string[] ) => {
         const pathsToAdd = binaryFilePaths.filter(
-          (binPath: string) => !prev.some((selPath: string) => arePathsEqual(selPath, binPath))
+          ( binPath: string ) => !prev.some( ( selPath: string ) => arePathsEqual( selPath, binPath ) )
         );
         return [...prev, ...pathsToAdd];
-      });
+      } );
     } else {
-      setSelectedFiles((prev: string[]) =>
-        prev.filter((selectedPath: string) => {
-          const file = allFiles.find((f: FileData) => arePathsEqual(f.path, selectedPath));
+      setSelectedFiles( ( prev: string[] ) =>
+        prev.filter( ( selectedPath: string ) => {
+          const file = allFiles.find( ( f: FileData ) => arePathsEqual( f.path, selectedPath ) );
           return !file?.isBinary;
-        })
+        } )
       );
     }
-  }, [includeBinaryPaths, allFiles]);
+  }, [includeBinaryPaths, allFiles] );
 
   // Add this new useEffect for safe mode detection
-  useEffect(() => {
-    if (!isElectron) return;
+  useEffect( () => {
+    if ( !isElectron ) return;
 
-    const handleStartupMode = (mode: { safeMode: boolean }) => {
-      setIsSafeMode(mode.safeMode);
+    const handleStartupMode = ( mode: { safeMode: boolean } ) => {
+      setIsSafeMode( mode.safeMode );
 
       // If we're in safe mode, don't auto-load the previously selected folder
-      if (mode.safeMode) {
-        console.log('Starting in safe mode - not loading saved folder');
-        localStorage.removeItem('hasLoadedInitialData');
-        localStorage.removeItem(STORAGE_KEYS.SELECTED_FOLDER);
+      if ( mode.safeMode ) {
+        console.log( 'Starting in safe mode - not loading saved folder' );
+        localStorage.removeItem( 'hasLoadedInitialData' );
+        localStorage.removeItem( STORAGE_KEYS.SELECTED_FOLDER );
       }
     };
 
-    window.electron.ipcRenderer.on('startup-mode', handleStartupMode);
+    window.electron.ipcRenderer.on( 'startup-mode', handleStartupMode );
 
     return () => {
-      window.electron.ipcRenderer.removeListener('startup-mode', handleStartupMode);
+      window.electron.ipcRenderer.removeListener( 'startup-mode', handleStartupMode );
     };
-  }, [isElectron]);
+  }, [isElectron] );
 
   // Simplified useEffect for loading initial data
-  useEffect(() => {
-    if (!isElectron || !selectedFolder || isSafeMode) return;
+  useEffect( () => {
+    if ( !isElectron || !selectedFolder || isSafeMode ) return;
 
     // Only run if we're not already processing
-    if (processingStatus.status === 'processing') {
-      console.log('[useEffect] Skipping - already processing');
+    if ( processingStatus.status === 'processing' ) {
+      console.log( '[useEffect] Skipping - already processing' );
       return;
     }
 
-    console.log('[useEffect] Loading folder:', selectedFolder);
-    setProcessingStatus({
+    console.log( '[useEffect] Loading folder:', selectedFolder );
+    setProcessingStatus( {
       status: 'processing',
       message: 'Loading files...',
-    });
+    } );
 
-    const timer = setTimeout(() => {
-      console.log('[useEffect] Sending request-file-list after debounce');
-      window.electron.ipcRenderer.send('request-file-list', {
+    const timer = setTimeout( () => {
+      console.log( '[useEffect] Sending request-file-list after debounce' );
+      window.electron.ipcRenderer.send( 'request-file-list', {
         folderPath: selectedFolder,
         ignoreMode,
         customIgnores,
         ignoreSettingsModified,
-      });
-    }, 300); // 300ms debounce
+      } );
+    }, 300 ); // 300ms debounce
 
     return () => {
-      clearTimeout(timer);
-      console.log('[useEffect] Cleanup - canceling pending request');
+      clearTimeout( timer );
+      console.log( '[useEffect] Cleanup - canceling pending request' );
     };
-  }, [selectedFolder, isSafeMode]); // Only depend on these core states (Leave it as is)
+  }, [selectedFolder, isSafeMode] ); // Only depend on these core states (Leave it as is)
 
   // Memoize event handlers to maintain reference equality
   const handleFolderSelected = useCallback(
-    (folderPath: string) => {
+    ( folderPath: string ) => {
       // Check if folderPath is valid string
-      if (typeof folderPath !== 'string') {
-        console.error('Invalid folder path received:', folderPath);
-        setProcessingStatus({
+      if ( typeof folderPath !== 'string' ) {
+        console.error( 'Invalid folder path received:', folderPath );
+        setProcessingStatus( {
           status: 'error',
           message: 'Invalid folder path received',
-        });
+        } );
         return;
       }
 
       // Prevent redundant processing if the same folder is selected and already loaded/loading
       if (
-        arePathsEqual(folderPath, selectedFolder) &&
-        (allFiles.length > 0 || processingStatus.status === 'processing')
+        arePathsEqual( folderPath, selectedFolder ) &&
+        ( allFiles.length > 0 || processingStatus.status === 'processing' )
       ) {
-        console.log('Folder already selected and loaded/loading, skipping request:', folderPath);
+        console.log( 'Folder already selected and loaded/loading, skipping request:', folderPath );
         return;
       }
 
-      const normalizedFolderPath = normalizePath(folderPath);
-      console.log('Folder selected:', normalizedFolderPath);
-      setProcessingStatus({
+      const normalizedFolderPath = normalizePath( folderPath );
+      console.log( 'Folder selected:', normalizedFolderPath );
+      setProcessingStatus( {
         status: 'processing',
         message: 'Requesting file list...',
-      });
-      setSelectedFolder(normalizedFolderPath);
+      } );
+      setSelectedFolder( normalizedFolderPath );
       const currentFolder = selectedFolder;
-      if (!arePathsEqual(normalizedFolderPath, currentFolder)) {
-        setSelectedFiles([]);
+      if ( !arePathsEqual( normalizedFolderPath, currentFolder ) ) {
+        setSelectedFiles( [] );
       }
-      console.log('[handleFolderSelected] Sending request-file-list:', {
+      console.log( '[handleFolderSelected] Sending request-file-list:', {
         folderPath,
         ignoreMode,
         customIgnores,
         ignoreSettingsModified,
-      });
-      window.electron.ipcRenderer.send('request-file-list', {
+      } );
+      window.electron.ipcRenderer.send( 'request-file-list', {
         folderPath,
         ignoreMode,
         customIgnores,
         ignoreSettingsModified,
-      });
+      } );
       resetIgnoreSettingsModified();
     },
     [
@@ -345,9 +345,9 @@ const App = (): JSX.Element => {
   // with proper dependency tracking
 
   const handleProcessingStatus = useCallback(
-    (status: { status: 'idle' | 'processing' | 'complete' | 'error'; message: string }) => {
-      console.log('Processing status:', status);
-      setProcessingStatus(status);
+    ( status: { status: 'idle' | 'processing' | 'complete' | 'error'; message: string } ) => {
+      console.log( 'Processing status:', status );
+      setProcessingStatus( status );
     },
     []
   );
@@ -357,16 +357,16 @@ const App = (): JSX.Element => {
 
   // Memoize handlers with stable dependencies
   const stableHandleFolderSelected = useCallback(
-    (folderPath: string) => {
-      handleFolderSelected(folderPath);
+    ( folderPath: string ) => {
+      handleFolderSelected( folderPath );
     },
     [handleFolderSelected]
   );
 
   const stableHandleFileListData = useCallback(
-    (files: FileData[]) => {
-      setAllFiles((prevFiles: FileData[]) => {
-        if (files.length !== prevFiles.length) {
+    ( files: FileData[] ) => {
+      setAllFiles( ( prevFiles: FileData[] ) => {
+        if ( files.length !== prevFiles.length ) {
           console.debug(
             '[handleFileListData] Updating files from',
             prevFiles.length,
@@ -375,87 +375,87 @@ const App = (): JSX.Element => {
           );
         }
         return files;
-      });
+      } );
 
-      setProcessingStatus({
+      setProcessingStatus( {
         status: 'complete',
-        message: `Loaded ${files.length} files`,
-      });
+        message: `Loaded ${ files.length } files`,
+      } );
 
-      if (selectedFiles.length > 0) {
-        console.log('[handleFileListData] Preserving existing selections');
-        const validSelectedFiles = selectedFiles.filter((selectedPath: string) =>
+      if ( selectedFiles.length > 0 ) {
+        console.log( '[handleFileListData] Preserving existing selections' );
+        const validSelectedFiles = selectedFiles.filter( ( selectedPath: string ) =>
           files.some(
-            (file) =>
-              arePathsEqual(file.path, selectedPath) && (includeBinaryPaths || !file.isBinary)
+            ( file ) =>
+              arePathsEqual( file.path, selectedPath ) && ( includeBinaryPaths || !file.isBinary )
           )
         );
 
-        if (validSelectedFiles.length !== selectedFiles.length) {
+        if ( validSelectedFiles.length !== selectedFiles.length ) {
           console.log(
             '[handleFileListData] Removed invalid selections:',
             selectedFiles.length - validSelectedFiles.length
           );
-          setSelectedFiles(validSelectedFiles);
+          setSelectedFiles( validSelectedFiles );
         } else {
-          console.log('[handleFileListData] All existing selections are valid');
+          console.log( '[handleFileListData] All existing selections are valid' );
         }
       } else {
-        console.log('[handleFileListData] No existing selections, selecting all eligible files');
+        console.log( '[handleFileListData] No existing selections, selecting all eligible files' );
         const selectablePaths = files
           .filter(
-            (file: FileData) =>
-              !file.isSkipped && !file.excludedByDefault && (includeBinaryPaths || !file.isBinary)
+            ( file: FileData ) =>
+              !file.isSkipped && !file.excludedByDefault && ( includeBinaryPaths || !file.isBinary )
           )
-          .map((file: FileData) => file.path);
+          .map( ( file: FileData ) => file.path );
 
-        setSelectedFiles(selectablePaths);
+        setSelectedFiles( selectablePaths );
       }
     },
     [selectedFiles, setAllFiles, setProcessingStatus, setSelectedFiles]
   );
 
-  const stableHandleProcessingStatus = useCallback(handleProcessingStatus, [
+  const stableHandleProcessingStatus = useCallback( handleProcessingStatus, [
     handleProcessingStatus,
-  ]);
+  ] );
 
   // Improved IPC listener setup with proper cleanup
-  useEffect(() => {
-    if (!isElectron) return;
+  useEffect( () => {
+    if ( !isElectron ) return;
 
-    const handleFolderSelected = (folderPath: string) => {
-      console.log('[IPC] Received folder-selected:', folderPath);
-      stableHandleFolderSelected(folderPath);
+    const handleFolderSelected = ( folderPath: string ) => {
+      console.log( '[IPC] Received folder-selected:', folderPath );
+      stableHandleFolderSelected( folderPath );
     };
 
-    const handleFileListData = (files: FileData[]) => {
-      console.log('[IPC] Received file-list-data:', files.length, 'files');
-      stableHandleFileListData(files);
+    const handleFileListData = ( files: FileData[] ) => {
+      console.log( '[IPC] Received file-list-data:', files.length, 'files' );
+      stableHandleFileListData( files );
     };
 
-    const handleProcessingStatus = (status: { status: string; message: string }) => {
-      console.log('[IPC] Received file-processing-status:', status);
-      stableHandleProcessingStatus(status);
+    const handleProcessingStatus = ( status: { status: string; message: string } ) => {
+      console.log( '[IPC] Received file-processing-status:', status );
+      stableHandleProcessingStatus( status );
     };
 
-    const handleBackendModeUpdate = (newMode: IgnoreMode) => {
-      console.info('[App] Backend signaled ignore mode update:', newMode);
+    const handleBackendModeUpdate = ( newMode: IgnoreMode ) => {
+      console.info( '[App] Backend signaled ignore mode update:', newMode );
     };
 
-    console.log('[useEffect] Setting up IPC listeners');
-    window.electron.ipcRenderer.on('folder-selected', handleFolderSelected);
-    window.electron.ipcRenderer.on('file-list-data', handleFileListData);
-    window.electron.ipcRenderer.on('file-processing-status', handleProcessingStatus);
-    window.electron.ipcRenderer.on('ignore-mode-updated', handleBackendModeUpdate);
+    console.log( '[useEffect] Setting up IPC listeners' );
+    window.electron.ipcRenderer.on( 'folder-selected', handleFolderSelected );
+    window.electron.ipcRenderer.on( 'file-list-data', handleFileListData );
+    window.electron.ipcRenderer.on( 'file-processing-status', handleProcessingStatus );
+    window.electron.ipcRenderer.on( 'ignore-mode-updated', handleBackendModeUpdate );
 
     return () => {
-      console.log('[useEffect] Cleaning up IPC listeners');
-      window.electron.ipcRenderer.removeListener('folder-selected', handleFolderSelected);
-      window.electron.ipcRenderer.removeListener('file-list-data', handleFileListData);
-      window.electron.ipcRenderer.removeListener('file-processing-status', handleProcessingStatus);
-      window.electron.ipcRenderer.removeListener('ignore-mode-updated', handleBackendModeUpdate);
+      console.log( '[useEffect] Cleaning up IPC listeners' );
+      window.electron.ipcRenderer.removeListener( 'folder-selected', handleFolderSelected );
+      window.electron.ipcRenderer.removeListener( 'file-list-data', handleFileListData );
+      window.electron.ipcRenderer.removeListener( 'file-processing-status', handleProcessingStatus );
+      window.electron.ipcRenderer.removeListener( 'ignore-mode-updated', handleBackendModeUpdate );
     };
-  }, [isElectron]); // Leave as is
+  }, [isElectron] ); // Leave as is
 
   /* ============================== HANDLERS & UTILITIES ============================== */
 
@@ -466,196 +466,196 @@ const App = (): JSX.Element => {
    * with the "Applying ignore mode..." status message before the reload occurs
    */
   const handleIgnoreViewerClose = useCallback(
-    (changesMade?: boolean) => {
+    ( changesMade?: boolean ) => {
       closeIgnoreViewer();
-      if (!changesMade) return;
+      if ( !changesMade ) return;
 
-      setProcessingStatus({
+      setProcessingStatus( {
         status: 'processing',
         message: 'Applying ignore mode…',
-      });
+      } );
 
-      if (isElectron) {
-        console.info('Applying ignore mode:');
-        window.electron.ipcRenderer.send('set-ignore-mode', ignoreMode);
-        window.electron.ipcRenderer.send('clear-ignore-cache');
+      if ( isElectron ) {
+        console.info( 'Applying ignore mode:' );
+        window.electron.ipcRenderer.send( 'set-ignore-mode', ignoreMode );
+        window.electron.ipcRenderer.send( 'clear-ignore-cache' );
 
-        if (changesMade) {
+        if ( changesMade ) {
           // Use setTimeout to allow UI to update with "Applying ignore mode..." status before reload
           // Increased timeout to 800ms to ensure UI updates are visible
-          setTimeout(() => window.location.reload(), 800);
+          setTimeout( () => window.location.reload(), 800 );
         }
       }
     },
     [isElectron, closeIgnoreViewer, ignoreMode]
   );
 
-  const cancelDirectoryLoading = useCallback(() => {
-    if (isElectron) {
-      window.electron.ipcRenderer.send('cancel-directory-loading');
-      setProcessingStatus({
+  const cancelDirectoryLoading = useCallback( () => {
+    if ( isElectron ) {
+      window.electron.ipcRenderer.send( 'cancel-directory-loading' );
+      setProcessingStatus( {
         status: 'idle',
         message: 'Directory loading cancelled',
-      });
+      } );
     }
-  }, [isElectron]);
+  }, [isElectron] );
 
   const openFolder = () => {
-    if (isElectron) {
-      console.log('Opening folder dialog');
-      setProcessingStatus({ status: 'idle', message: 'Select a folder...' });
-      window.electron.ipcRenderer.send('open-folder');
+    if ( isElectron ) {
+      console.log( 'Opening folder dialog' );
+      setProcessingStatus( { status: 'idle', message: 'Select a folder...' } );
+      window.electron.ipcRenderer.send( 'open-folder' );
     } else {
-      console.warn('Folder selection not available in browser');
+      console.warn( 'Folder selection not available in browser' );
     }
   };
 
   // Apply filters and sorting to files
   const applyFiltersAndSort = useCallback(
-    (files: FileData[], sort: string, filter: string) => {
+    ( files: FileData[], sort: string, filter: string ) => {
       let filtered = files;
 
       // Apply filter
-      if (filter) {
+      if ( filter ) {
         const lowerFilter = filter.toLowerCase();
         filtered = files.filter(
-          (file) =>
-            file.name.toLowerCase().includes(lowerFilter) ||
-            file.path.toLowerCase().includes(lowerFilter)
+          ( file ) =>
+            file.name.toLowerCase().includes( lowerFilter ) ||
+            file.path.toLowerCase().includes( lowerFilter )
         );
       }
 
       // Apply sort
-      const [sortKey, sortDir] = sort.split('-');
-      const sorted = [...filtered].sort((a, b) => {
+      const [sortKey, sortDir] = sort.split( '-' );
+      const sorted = [...filtered].sort( ( a, b ) => {
         let comparison = 0;
 
-        if (sortKey === 'name') {
-          comparison = a.name.localeCompare(b.name);
-        } else if (sortKey === 'tokens') {
+        if ( sortKey === 'name' ) {
+          comparison = a.name.localeCompare( b.name );
+        } else if ( sortKey === 'tokens' ) {
           comparison = a.tokenCount - b.tokenCount;
-        } else if (sortKey === 'size') {
+        } else if ( sortKey === 'size' ) {
           comparison = a.size - b.size;
         }
 
         return sortDir === 'asc' ? comparison : -comparison;
-      });
+      } );
 
-      setDisplayedFiles(sorted);
+      setDisplayedFiles( sorted );
     },
     [setDisplayedFiles]
   );
 
   // Apply filters and sort whenever relevant state changes
-  useEffect(() => {
-    applyFiltersAndSort(allFiles, sortOrder, searchTerm);
-  }, [applyFiltersAndSort, allFiles, sortOrder, searchTerm]); // Added all dependencies
+  useEffect( () => {
+    applyFiltersAndSort( allFiles, sortOrder, searchTerm );
+  }, [applyFiltersAndSort, allFiles, sortOrder, searchTerm] ); // Added all dependencies
 
   // Listen for live file changes from main process
-  useEffect(() => {
-    if (!isElectron) return;
+  useEffect( () => {
+    if ( !isElectron ) return;
 
-    const handleFileAdded = (newFile: FileData) => {
-      if (newFile.isBinary && !includeBinaryPaths) {
+    const handleFileAdded = ( newFile: FileData ) => {
+      if ( newFile.isBinary && !includeBinaryPaths ) {
         return; // skip auto-selecting binary
       }
-      if (process.env.NODE_ENV === 'development') {
-        console.log('<<< IPC RECEIVED: file-added >>>', newFile);
+      if ( process.env.NODE_ENV === 'development' ) {
+        console.log( '<<< IPC RECEIVED: file-added >>>', newFile );
       }
-      setAllFiles((prevFiles: FileData[]) => {
+      setAllFiles( ( prevFiles: FileData[] ) => {
         // Avoid duplicates
-        if (prevFiles.some((f: FileData) => arePathsEqual(f.path, newFile.path))) {
-          console.log('[State Update] File already exists, ignoring:', newFile.path);
+        if ( prevFiles.some( ( f: FileData ) => arePathsEqual( f.path, newFile.path ) ) ) {
+          console.log( '[State Update] File already exists, ignoring:', newFile.path );
           return prevFiles;
         }
         const updatedFiles = [...prevFiles, newFile];
-        applyFiltersAndSort(updatedFiles, sortOrder, searchTerm);
+        applyFiltersAndSort( updatedFiles, sortOrder, searchTerm );
         return updatedFiles;
-      });
+      } );
       // Optionally auto-select the new file if it meets criteria
-      if (!newFile.isSkipped && !newFile.excludedByDefault) {
-        setSelectedFiles((prev: string[]) => [...prev, normalizePath(newFile.path)]);
+      if ( !newFile.isSkipped && !newFile.excludedByDefault ) {
+        setSelectedFiles( ( prev: string[] ) => [...prev, normalizePath( newFile.path )] );
       }
     };
 
-    const handleFileUpdated = (updatedFile: FileData) => {
-      console.log('<<< IPC RECEIVED: file-updated >>>', updatedFile);
-      setAllFiles((prevFiles: FileData[]) => {
-        const updatedFiles = prevFiles.map((file: FileData) =>
-          arePathsEqual(file.path, updatedFile.path) ? updatedFile : file
+    const handleFileUpdated = ( updatedFile: FileData ) => {
+      console.log( '<<< IPC RECEIVED: file-updated >>>', updatedFile );
+      setAllFiles( ( prevFiles: FileData[] ) => {
+        const updatedFiles = prevFiles.map( ( file: FileData ) =>
+          arePathsEqual( file.path, updatedFile.path ) ? updatedFile : file
         );
-        applyFiltersAndSort(updatedFiles, sortOrder, searchTerm);
+        applyFiltersAndSort( updatedFiles, sortOrder, searchTerm );
         return updatedFiles;
-      });
+      } );
     };
 
-    const handleFileRemoved = (filePath: string) => {
-      console.log('<<< IPC RECEIVED: file-removed >>>', filePath);
-      const normalizedPath = normalizePath(filePath);
-      setAllFiles((prevFiles: FileData[]) => {
+    const handleFileRemoved = ( filePath: string ) => {
+      console.log( '<<< IPC RECEIVED: file-removed >>>', filePath );
+      const normalizedPath = normalizePath( filePath );
+      setAllFiles( ( prevFiles: FileData[] ) => {
         const updatedFiles = prevFiles.filter(
-          (file: FileData) => !arePathsEqual(file.path, normalizedPath)
+          ( file: FileData ) => !arePathsEqual( file.path, normalizedPath )
         );
-        applyFiltersAndSort(updatedFiles, sortOrder, searchTerm);
+        applyFiltersAndSort( updatedFiles, sortOrder, searchTerm );
         return updatedFiles;
-      });
-      setSelectedFiles((prevSelected: string[]) =>
-        prevSelected.filter((path: string) => !arePathsEqual(path, normalizedPath))
+      } );
+      setSelectedFiles( ( prevSelected: string[] ) =>
+        prevSelected.filter( ( path: string ) => !arePathsEqual( path, normalizedPath ) )
       );
     };
 
-    window.electron.ipcRenderer.on('file-added', handleFileAdded);
-    window.electron.ipcRenderer.on('file-updated', handleFileUpdated);
-    window.electron.ipcRenderer.on('file-removed', handleFileRemoved);
+    window.electron.ipcRenderer.on( 'file-added', handleFileAdded );
+    window.electron.ipcRenderer.on( 'file-updated', handleFileUpdated );
+    window.electron.ipcRenderer.on( 'file-removed', handleFileRemoved );
 
     return () => {
-      window.electron.ipcRenderer.removeListener('file-added', handleFileAdded);
-      window.electron.ipcRenderer.removeListener('file-updated', handleFileUpdated);
-      window.electron.ipcRenderer.removeListener('file-removed', handleFileRemoved);
+      window.electron.ipcRenderer.removeListener( 'file-added', handleFileAdded );
+      window.electron.ipcRenderer.removeListener( 'file-updated', handleFileUpdated );
+      window.electron.ipcRenderer.removeListener( 'file-removed', handleFileRemoved );
     };
-  }, [isElectron, sortOrder, searchTerm, applyFiltersAndSort]);
+  }, [isElectron, sortOrder, searchTerm, applyFiltersAndSort] );
 
   // Toggle file selection
-  const toggleFileSelection = (filePath: string) => {
+  const toggleFileSelection = ( filePath: string ) => {
     // Normalize the incoming file path
-    const normalizedPath = normalizePath(filePath);
+    const normalizedPath = normalizePath( filePath );
 
-    const f = allFiles.find((f: FileData) => arePathsEqual(f.path, normalizedPath));
-    if (f?.isBinary && !includeBinaryPaths) {
+    const f = allFiles.find( ( f: FileData ) => arePathsEqual( f.path, normalizedPath ) );
+    if ( f?.isBinary && !includeBinaryPaths ) {
       return;
     }
 
-    setSelectedFiles((prev: string[]) => {
+    setSelectedFiles( ( prev: string[] ) => {
       // Check if the file is already selected using case-sensitive/insensitive comparison as appropriate
-      const isSelected = prev.some((path) => arePathsEqual(path, normalizedPath));
+      const isSelected = prev.some( ( path ) => arePathsEqual( path, normalizedPath ) );
 
-      if (isSelected) {
+      if ( isSelected ) {
         // Remove the file from selected files
-        return prev.filter((path: string) => !arePathsEqual(path, normalizedPath));
+        return prev.filter( ( path: string ) => !arePathsEqual( path, normalizedPath ) );
       } else {
         // Add the file to selected files
         return [...prev, normalizedPath];
       }
-    });
+    } );
   };
 
   // Toggle folder selection (select/deselect all files in folder)
-  const toggleFolderSelection = (folderPath: string, isSelected: boolean) => {
+  const toggleFolderSelection = ( folderPath: string, isSelected: boolean ) => {
     // Normalize the folder path for cross-platform compatibility
-    const normalizedFolderPath = normalizePath(folderPath);
+    const normalizedFolderPath = normalizePath( folderPath );
 
     // Function to check if a file is in the given folder or its subfolders
-    const isFileInFolder = (filePath: string, folderPath: string): boolean => {
+    const isFileInFolder = ( filePath: string, folderPath: string ): boolean => {
       // Ensure paths are normalized with consistent slashes
-      let normalizedFilePath = normalizePath(filePath);
-      let normalizedFolderPath = normalizePath(folderPath);
+      let normalizedFilePath = normalizePath( filePath );
+      let normalizedFolderPath = normalizePath( folderPath );
 
       // Add leading slash to absolute paths if missing (common on macOS)
-      if (!normalizedFilePath.startsWith('/') && !normalizedFilePath.match(/^[a-z]:/i)) {
+      if ( !normalizedFilePath.startsWith( '/' ) && !normalizedFilePath.match( /^[a-z]:/i ) ) {
         normalizedFilePath = '/' + normalizedFilePath;
       }
 
-      if (!normalizedFolderPath.startsWith('/') && !normalizedFolderPath.match(/^[a-z]:/i)) {
+      if ( !normalizedFolderPath.startsWith( '/' ) && !normalizedFolderPath.match( /^[a-z]:/i ) ) {
         normalizedFolderPath = '/' + normalizedFolderPath;
       }
 
@@ -663,10 +663,10 @@ const App = (): JSX.Element => {
       // 1. The paths are equal (exact match)
       // 2. The file path is a subpath of the folder
       const isMatch =
-        arePathsEqual(normalizedFilePath, normalizedFolderPath) ||
-        isSubPath(normalizedFolderPath, normalizedFilePath);
+        arePathsEqual( normalizedFilePath, normalizedFolderPath ) ||
+        isSubPath( normalizedFolderPath, normalizedFilePath );
 
-      if (isMatch) {
+      if ( isMatch ) {
         // File is in folder
       }
 
@@ -674,73 +674,73 @@ const App = (): JSX.Element => {
     };
 
     // Filter all files to get only those in this folder (and subfolders) that are selectable
-    const filesInFolder = allFiles.filter((file: FileData) => {
-      const inFolder = isFileInFolder(file.path, normalizedFolderPath);
+    const filesInFolder = allFiles.filter( ( file: FileData ) => {
+      const inFolder = isFileInFolder( file.path, normalizedFolderPath );
       const selectable =
-        !file.isSkipped && !file.excludedByDefault && (includeBinaryPaths || !file.isBinary);
+        !file.isSkipped && !file.excludedByDefault && ( includeBinaryPaths || !file.isBinary );
       return selectable && inFolder;
-    });
+    } );
 
-    console.log('Found', filesInFolder.length, 'selectable files in folder');
+    console.log( 'Found', filesInFolder.length, 'selectable files in folder' );
 
     // If no selectable files were found, do nothing
-    if (filesInFolder.length === 0) {
-      console.warn('No selectable files found in folder, nothing to do');
+    if ( filesInFolder.length === 0 ) {
+      console.warn( 'No selectable files found in folder, nothing to do' );
       return;
     }
 
     // Extract just the paths from the files and normalize them
-    const folderFilePaths = filesInFolder.map((file: FileData) => normalizePath(file.path));
+    const folderFilePaths = filesInFolder.map( ( file: FileData ) => normalizePath( file.path ) );
 
-    if (isSelected) {
+    if ( isSelected ) {
       // Adding files - create a new Set with all existing + new files
-      setSelectedFiles((prev: string[]) => {
-        const existingSelection = new Set(prev.map(normalizePath));
-        folderFilePaths.forEach((pathToAdd: string) => existingSelection.add(pathToAdd));
-        const newSelection = Array.from(existingSelection);
+      setSelectedFiles( ( prev: string[] ) => {
+        const existingSelection = new Set( prev.map( normalizePath ) );
+        folderFilePaths.forEach( ( pathToAdd: string ) => existingSelection.add( pathToAdd ) );
+        const newSelection = Array.from( existingSelection );
         console.log(
-          `Added ${folderFilePaths.length} files to selection, total now: ${newSelection.length}`
+          `Added ${ folderFilePaths.length } files to selection, total now: ${ newSelection.length }`
         );
         return newSelection;
-      });
+      } );
     } else {
       // Removing files - filter out any file that's in our folder
-      setSelectedFiles((prev: string[]) => {
+      setSelectedFiles( ( prev: string[] ) => {
         const newSelection = prev.filter(
-          (path: string) => !isFileInFolder(path, normalizedFolderPath)
+          ( path: string ) => !isFileInFolder( path, normalizedFolderPath )
         );
         return newSelection;
-      });
+      } );
     }
   };
 
   // Handle sort change
-  const handleSortChange = (newSort: string) => {
-    setSortOrder(newSort);
+  const handleSortChange = ( newSort: string ) => {
+    setSortOrder( newSort );
     // applyFiltersAndSort(allFiles, newSort, searchTerm); // Let the useEffect handle this
-    setSortDropdownOpen(false); // Close dropdown after selection
+    setSortDropdownOpen( false ); // Close dropdown after selection
   };
 
   // Handle search change
-  const handleSearchChange = (newSearch: string) => {
-    setSearchTerm(newSearch);
+  const handleSearchChange = ( newSearch: string ) => {
+    setSearchTerm( newSearch );
     // applyFiltersAndSort(allFiles, sortOrder, newSearch); // Let the useEffect handle this
   };
 
   // Toggle sort dropdown
   const toggleSortDropdown = () => {
-    setSortDropdownOpen(!sortDropdownOpen);
+    setSortDropdownOpen( !sortDropdownOpen );
   };
 
   // Calculate total tokens from selected files
   const calculateTotalTokens = () => {
     // Ensure paths are normalized before summing tokens
-    const normalizedSelectedPaths = selectedFiles.map(normalizePath);
-    return normalizedSelectedPaths.reduce((total: number, selectedPath: string) => {
+    const normalizedSelectedPaths = selectedFiles.map( normalizePath );
+    return normalizedSelectedPaths.reduce( ( total: number, selectedPath: string ) => {
       // Use arePathsEqual for comparison
-      const file = allFiles.find((f: FileData) => arePathsEqual(f.path, selectedPath));
-      return total + (file ? file.tokenCount : 0);
-    }, 0);
+      const file = allFiles.find( ( f: FileData ) => arePathsEqual( f.path, selectedPath ) );
+      return total + ( file ? file.tokenCount : 0 );
+    }, 0 );
   };
 
   /**
@@ -754,7 +754,7 @@ const App = (): JSX.Element => {
    * @returns {string} The concatenated content ready for copying
    */
   const getSelectedFilesContent = () => {
-    return formatContentForCopying({
+    return formatContentForCopying( {
       files: allFiles,
       selectedFiles,
       sortOrder,
@@ -762,48 +762,48 @@ const App = (): JSX.Element => {
       selectedFolder,
       userInstructions,
       includeBinaryPaths,
-    });
+    } );
   };
 
   // Handle select all files
   const selectAllFiles = () => {
-    console.time('selectAllFiles');
+    console.time( 'selectAllFiles' );
     try {
       const selectablePaths = displayedFiles
-        .filter((file: FileData) => !file.isSkipped && (includeBinaryPaths || !file.isBinary))
-        .map((file: FileData) => normalizePath(file.path)); // Normalize paths here
+        .filter( ( file: FileData ) => !file.isSkipped && ( includeBinaryPaths || !file.isBinary ) )
+        .map( ( file: FileData ) => normalizePath( file.path ) ); // Normalize paths here
 
-      setSelectedFiles((prev: string[]) => {
-        const normalizedPrev = prev.map(normalizePath); // Normalize existing selection
+      setSelectedFiles( ( prev: string[] ) => {
+        const normalizedPrev = prev.map( normalizePath ); // Normalize existing selection
         const newSelection = [...normalizedPrev];
-        selectablePaths.forEach((pathToAdd: string) => {
+        selectablePaths.forEach( ( pathToAdd: string ) => {
           // Use arePathsEqual for checking existence
-          if (!newSelection.some((existingPath) => arePathsEqual(existingPath, pathToAdd))) {
-            newSelection.push(pathToAdd);
+          if ( !newSelection.some( ( existingPath ) => arePathsEqual( existingPath, pathToAdd ) ) ) {
+            newSelection.push( pathToAdd );
           }
-        });
+        } );
         return newSelection;
-      });
+      } );
     } finally {
-      console.timeEnd('selectAllFiles');
+      console.timeEnd( 'selectAllFiles' );
     }
   };
 
   // Handle deselect all files
   const deselectAllFiles = () => {
-    const displayedPathsToDeselect = displayedFiles.map((file: FileData) =>
-      normalizePath(file.path)
+    const displayedPathsToDeselect = displayedFiles.map( ( file: FileData ) =>
+      normalizePath( file.path )
     ); // Normalize paths to deselect
-    setSelectedFiles((prev: string[]) => {
-      const normalizedPrev = prev.map(normalizePath); // Normalize existing selection
+    setSelectedFiles( ( prev: string[] ) => {
+      const normalizedPrev = prev.map( normalizePath ); // Normalize existing selection
       // Use arePathsEqual for filtering
       return normalizedPrev.filter(
-        (selectedPath: string) =>
+        ( selectedPath: string ) =>
           !displayedPathsToDeselect.some(
-            (deselectPath: string) => arePathsEqual(selectedPath, deselectPath) // Add type annotation
+            ( deselectPath: string ) => arePathsEqual( selectedPath, deselectPath ) // Add type annotation
           )
       );
-    });
+    } );
   };
 
   // Sort options for the dropdown
@@ -815,18 +815,18 @@ const App = (): JSX.Element => {
   ];
 
   // Handle expand/collapse state changes
-  const toggleExpanded = (nodeId: string) => {
-    setExpandedNodes((prev: Record<string, boolean>) => {
+  const toggleExpanded = ( nodeId: string ) => {
+    setExpandedNodes( ( prev: Record<string, boolean> ) => {
       const newState = {
         ...prev,
         [nodeId]: prev[nodeId] === undefined ? false : !prev[nodeId],
       };
 
       // Save to localStorage
-      localStorage.setItem(STORAGE_KEYS.EXPANDED_NODES, JSON.stringify(newState));
+      localStorage.setItem( STORAGE_KEYS.EXPANDED_NODES, JSON.stringify( newState ) );
 
       return newState;
-    });
+    } );
   };
 
   /* ===================================================================== */
@@ -908,19 +908,19 @@ const App = (): JSX.Element => {
                   </div>
                   <div className="sort-dropdown">
                     <button className="sort-dropdown-button" onClick={toggleSortDropdown}>
-                      Sort: {sortOptions.find((opt) => opt.value === sortOrder)?.label || sortOrder}
+                      Sort: {sortOptions.find( ( opt ) => opt.value === sortOrder )?.label || sortOrder}
                     </button>
                     {sortDropdownOpen && (
                       <div className="sort-options">
-                        {sortOptions.map((option) => (
+                        {sortOptions.map( ( option ) => (
                           <div
                             key={option.value}
-                            className={`sort-option ${sortOrder === option.value ? 'active' : ''}`}
-                            onClick={() => handleSortChange(option.value)}
+                            className={`sort-option ${ sortOrder === option.value ? 'active' : '' }`}
+                            onClick={() => handleSortChange( option.value )}
                           >
                             {option.label}
                           </div>
-                        ))}
+                        ) )}
                       </div>
                     )}
                   </div>
@@ -962,7 +962,7 @@ const App = (): JSX.Element => {
                       <input
                         type="checkbox"
                         checked={includeFileTree}
-                        onChange={() => setIncludeFileTree(!includeFileTree)}
+                        onChange={() => setIncludeFileTree( !includeFileTree )}
                       />
                       <span>Include File Tree</span>
                     </label>
@@ -973,7 +973,7 @@ const App = (): JSX.Element => {
                       <input
                         type="checkbox"
                         checked={includeBinaryPaths}
-                        onChange={() => setIncludeBinaryPaths(!includeBinaryPaths)}
+                        onChange={() => setIncludeBinaryPaths( !includeBinaryPaths )}
                       />
                       <span>Include Binary As Paths</span>
                     </label>

@@ -96,7 +96,8 @@
 /* -------------------- Dark Mode Variables -------------------- */
 .dark-mode {
   /* Primary Color Palette */
-  --color-primary: #0e639c; /* Kept consistent for branding */
+  --color-primary: #0e639c;
+  /* Kept consistent for branding */
   --color-primary-light: #1177be;
   --color-primary-dark: #0c5183;
 
@@ -163,7 +164,8 @@ body {
   color: var(--text-primary);
   line-height: 1.5;
   height: 100vh;
-  overflow: hidden; /* Prevent body scroll, manage scrolling within components */
+  overflow: hidden;
+  /* Prevent body scroll, manage scrolling within components */
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -475,7 +477,8 @@ input[type='checkbox'][disabled] {
   align-items: center;
   justify-content: space-between;
   background-color: var(--background-primary);
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0;
+  /* Prevent header from shrinking */
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -514,9 +517,12 @@ input[type='checkbox'][disabled] {
   font-size: 12px;
   margin: 0 auto;
   display: flex;
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  text-align: center; /* Center text */
+  align-items: center;
+  /* Center content vertically */
+  justify-content: center;
+  /* Center content horizontally */
+  text-align: center;
+  /* Center text */
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
@@ -526,9 +532,12 @@ input[type='checkbox'][disabled] {
 /* -------------------- Main Content Area -------------------- */
 .main-content {
   display: flex;
-  flex: 1; /* Take remaining vertical space */
-  overflow: hidden; /* Crucial for child scrolling */
-  height: calc(100% - 73px); /* Adjust based on actual header height */
+  flex: 1;
+  /* Take remaining vertical space */
+  overflow: hidden;
+  /* Crucial for child scrolling */
+  height: calc(100% - 73px);
+  /* Adjust based on actual header height */
 }
 
 /* ===========================================================================
@@ -548,10 +557,13 @@ input[type='checkbox'][disabled] {
 .file-card-binary-badge {
   font-size: 10px;
   padding: 2px 6px;
-  margin-left: var(--space-md); /* Move to the right by using auto margin */
+  margin-left: var(--space-md);
+  /* Move to the right by using auto margin */
   border-radius: 4px;
-  background-color: rgba(139, 0, 0, 0.6); /* Dark Red with reduced opacity */
-  color: #ffffff; /* White text */
+  background-color: rgba(139, 0, 0, 0.6);
+  /* Dark Red with reduced opacity */
+  color: #ffffff;
+  /* White text */
 }
 
 /* -------------------- Sidebar -------------------- */
@@ -559,21 +571,26 @@ input[type='checkbox'][disabled] {
   width: 300px;
   min-width: 200px;
   max-width: 500px;
-  height: 100%; /* Fill parent height */
+  height: 100%;
+  /* Fill parent height */
   display: flex;
   flex-direction: column;
   border-right: var(--standard-border);
-  overflow: hidden; /* Manage internal scrolling */
+  overflow: hidden;
+  /* Manage internal scrolling */
   background-color: var(--background-secondary);
-  position: relative; /* For resize handle positioning */
+  position: relative;
+  /* For resize handle positioning */
   transition: width 0.1s ease;
-  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  flex-shrink: 0;
+  /* Prevent sidebar from shrinking */
   animation: slideInFromLeft 0.3s ease-out;
 }
 
 .sidebar-header {
   background-color: var(--background-secondary);
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0;
+  /* Prevent header from shrinking */
 }
 
 .sidebar-title {
@@ -619,12 +636,15 @@ input[type='checkbox'][disabled] {
 
 /* -------------------- Content Area (Right Pane) -------------------- */
 .content-area {
-  flex: 1; /* Take remaining horizontal space */
+  flex: 1;
+  /* Take remaining horizontal space */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Manage internal scrolling */
+  overflow: hidden;
+  /* Manage internal scrolling */
   background-color: var(--background-primary);
-  min-width: 0; /* Prevent content from pushing layout */
+  min-width: 0;
+  /* Prevent content from pushing layout */
 }
 
 .content-header {
@@ -641,9 +661,12 @@ input[type='checkbox'][disabled] {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-left: var(--space-md); /* Add left margin to move it right */
-  margin-bottom: var(--space-sm); /* Add bottom margin for spacing */
-  margin-top: var(--space-xs); /* Reduced top margin from --space-md to --space-xs */
+  margin-left: var(--space-md);
+  /* Add left margin to move it right */
+  margin-bottom: var(--space-sm);
+  /* Add bottom margin for spacing */
+  margin-top: var(--space-xs);
+  /* Reduced top margin from --space-md to --space-xs */
   /* Alternative: padding-left: var(--space-md); */
 }
 
@@ -672,7 +695,8 @@ input[type='checkbox'][disabled] {
   cursor: col-resize;
   z-index: 10;
   background-color: transparent;
-  will-change: transform; /* Optimize for performance */
+  will-change: transform;
+  /* Optimize for performance */
 }
 
 .sidebar-resize-handle:hover {
@@ -682,8 +706,10 @@ input[type='checkbox'][disabled] {
 
 /* -------------------- File Tree (in Sidebar) -------------------- */
 .file-tree {
-  flex: 1; /* Allow tree to grow and fill sidebar space */
-  overflow-y: auto; /* Enable vertical scrolling */
+  flex: 1;
+  /* Allow tree to grow and fill sidebar space */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
   padding: 8px 0;
   background-color: var(--background-secondary);
 }
@@ -716,7 +742,8 @@ input[type='checkbox'][disabled] {
 .tree-item {
   display: flex;
   align-items: center;
-  padding: var(--space-sm) var(--space-md); /* More horizontal padding */
+  padding: var(--space-sm) var(--space-md);
+  /* More horizontal padding */
   margin: 2px 0;
   border-radius: 4px;
   cursor: pointer;
@@ -745,7 +772,8 @@ input[type='checkbox'][disabled] {
   display: flex;
   align-items: center;
   flex: 1;
-  min-width: 0; /* Prevent overflow issues */
+  min-width: 0;
+  /* Prevent overflow issues */
   overflow: hidden;
 }
 
@@ -758,7 +786,8 @@ input[type='checkbox'][disabled] {
   margin-right: 4px;
   cursor: pointer;
   color: var(--icon-color);
-  z-index: 2; /* Ensure toggle is clickable */
+  z-index: 2;
+  /* Ensure toggle is clickable */
   flex-shrink: 0;
 }
 
@@ -778,7 +807,8 @@ input[type='checkbox'][disabled] {
 }
 
 .tree-item-indent {
-  width: 16px; /* Controls indentation level */
+  width: 16px;
+  /* Controls indentation level */
   flex-shrink: 0;
 }
 
@@ -802,8 +832,10 @@ input[type='checkbox'][disabled] {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--text-primary);
-  padding-left: var(--space-xs); /* Add a bit of padding to the left */
-  font-size: 14.5px; /* Using the small font size variable */
+  padding-left: var(--space-xs);
+  /* Add a bit of padding to the left */
+  font-size: 14.5px;
+  /* Using the small font size variable */
 }
 
 .tree-item-tokens {
@@ -819,16 +851,21 @@ input[type='checkbox'][disabled] {
   font-size: 10px;
   padding: 1px 5px;
   border-radius: 4px;
-  background-color: var(--hover-color); /* Default background */
-  color: var(--text-secondary); /* Default text color */
-  margin-left: 6px; /* Keep consistent margin */
+  background-color: var(--hover-color);
+  /* Default background */
+  color: var(--text-secondary);
+  /* Default text color */
+  margin-left: 6px;
+  /* Keep consistent margin */
   white-space: nowrap;
 }
 
 /* Specific style for individual binary file badges */
 .tree-item-badge-binary-file {
-  background-color: rgba(139, 0, 0, 0.6); /* Dark Red with reduced opacity */
-  color: #ffffff; /* White text */
+  background-color: rgba(139, 0, 0, 0.6);
+  /* Dark Red with reduced opacity */
+  color: #ffffff;
+  /* White text */
 }
 
 /* Specific style for folder badges */
@@ -864,7 +901,8 @@ input[type='checkbox'][disabled] {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1001;
   transition: opacity 0.2s ease;
-  backdrop-filter: blur(2px); /* Slight blur effect for depth */
+  backdrop-filter: blur(2px);
+  /* Slight blur effect for depth */
 }
 
 .ignore-patterns-modal {
@@ -932,7 +970,8 @@ input[type='checkbox'][disabled] {
   width: 100%;
   padding: 10px 14px;
   background-color: var(--background-secondary);
-  border: 2px solid #000000; /* Changed from var(--border-color) to black */
+  border: 2px solid #000000;
+  /* Changed from var(--border-color) to black */
   border-radius: 8px;
   color: var(--text-primary);
   font-size: 15px;
@@ -1110,7 +1149,8 @@ input[type='checkbox'][disabled] {
 .add-pattern-button {
   background-color: var(--color-primary);
   color: var(--text-on-primary);
-  border: 1px solid var(--color-primary-dark); /* Added distinct border */
+  border: 1px solid var(--color-primary-dark);
+  /* Added distinct border */
   border-radius: var(--border-radius-md);
   padding: var(--space-sm) var(--space-md);
   font-size: var(--font-size-sm);
@@ -1303,9 +1343,11 @@ input[type='checkbox'][disabled] {
   gap: 8px;
   margin-bottom: 12px;
 }
+
 .custom-global-ignores input {
   flex-grow: 1;
-  border: 1px solid var(--border-color); /* Use standard border color */
+  border: 1px solid var(--border-color);
+  /* Use standard border color */
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 15px;
@@ -1313,11 +1355,14 @@ input[type='checkbox'][disabled] {
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
-  margin-bottom: 0; /* Remove bottom margin from input */
+  margin-bottom: 0;
+  /* Remove bottom margin from input */
 }
+
 .custom-global-ignores input:hover {
   border-color: var(--border-color-focus);
 }
+
 .custom-global-ignores input:focus {
   border-color: var(--border-color-focus);
   box-shadow: var(--focus-ring);
@@ -1332,12 +1377,16 @@ input[type='checkbox'][disabled] {
   font-size: 16px;
   font-style: italic;
 }
+
 /* ToggleSwitch styles with light/dark mode support */
 .toggle-switch {
   position: relative;
-  width: 180px; /* Reduced width */
-  height: 36px; /* Reduced height */
-  border-radius: 18px; /* Adjusted to match height */
+  width: 180px;
+  /* Reduced width */
+  height: 36px;
+  /* Reduced height */
+  border-radius: 18px;
+  /* Adjusted to match height */
   background-color: #7d7e84;
   cursor: pointer;
   user-select: none;
@@ -1349,15 +1398,20 @@ input[type='checkbox'][disabled] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 4px; /* Reduced padding for better centering */
+  padding: 0 4px;
+  /* Reduced padding for better centering */
 }
 
 .toggle-switch-inner {
   position: absolute;
-  top: 3px; /* Adjusted for better vertical centering */
-  width: calc(50% - 6px); /* Adjusted width for better fit */
-  height: calc(100% - 6px); /* Adjusted height for better fit */
-  background-color: var(--color-primary); /* Using primary color (blue) */
+  top: 3px;
+  /* Adjusted for better vertical centering */
+  width: calc(50% - 6px);
+  /* Adjusted width for better fit */
+  height: calc(100% - 6px);
+  /* Adjusted height for better fit */
+  background-color: var(--color-primary);
+  /* Using primary color (blue) */
   border-radius: 16px;
   transition:
     left 0.3s ease,
@@ -1371,17 +1425,22 @@ input[type='checkbox'][disabled] {
 }
 
 .toggle-switch-inner.off {
-  left: 3px; /* Adjusted for better alignment */
-  background-color: var(--color-primary); /* Grey when off */
+  left: 3px;
+  /* Adjusted for better alignment */
+  background-color: var(--color-primary);
+  /* Grey when off */
 }
 
 .toggle-switch-inner.on {
-  left: calc(50% + 3px); /* Adjusted for better alignment */
-  background-color: var(--color-primary); /* Blue when on */
+  left: calc(50% + 3px);
+  /* Adjusted for better alignment */
+  background-color: var(--color-primary);
+  /* Blue when on */
 }
 
 .toggle-switch .toggle-label {
-  font-size: 13px; /* Reduced font size */
+  font-size: 13px;
+  /* Reduced font size */
   font-weight: 500;
   color: #ffffff;
   z-index: 2;
@@ -1402,7 +1461,8 @@ input[type='checkbox'][disabled] {
 }
 
 .toggle-switch .toggle-label.active {
-  color: white; /* Bright white color for active text in light mode */
+  color: white;
+  /* Bright white color for active text in light mode */
   font-weight: 600;
 }
 
@@ -1413,7 +1473,8 @@ input[type='checkbox'][disabled] {
 }
 
 .dark-mode .toggle-switch-inner {
-  background-color: var(--color-primary); /* Using primary color (blue) in dark mode */
+  background-color: var(--color-primary);
+  /* Using primary color (blue) in dark mode */
 }
 
 .dark-mode .toggle-switch-inner.off {
@@ -1425,13 +1486,15 @@ input[type='checkbox'][disabled] {
 }
 
 .dark-mode .toggle-switch .toggle-label.active {
-  color: white; /* Keep active text bright white in dark mode too */
+  color: white;
+  /* Keep active text bright white in dark mode too */
 }
 
 /* -------------------- Custom Global Ignores Section -------------------- */
 .custom-global-ignores {
   margin: 16px 0;
 }
+
 .custom-global-ignores input {
   flex-grow: 1;
   border: 1px solid var(--border-color);
@@ -1472,20 +1535,23 @@ input[type='checkbox'][disabled] {
   padding: 0;
   margin: 0;
 }
+
 .custom-global-ignores li {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
   margin: 4px var(--space-md);
-  background-color: #e8e8e8; /* Darker background for light mode */
+  background-color: #e8e8e8;
+  /* Darker background for light mode */
   border: 1px solid var(--border-color);
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
 
 .dark-mode .custom-global-ignores li {
-  background-color: var(--background-secondary); /* Keep the same for dark mode */
+  background-color: var(--background-secondary);
+  /* Keep the same for dark mode */
   border: 1px solid var(--border-color);
 }
 
@@ -1506,26 +1572,34 @@ input[type='checkbox'][disabled] {
 
 .custom-global-ignores li button:hover {
   opacity: 0.8;
-  background-color: rgba(231, 76, 60, 0.1); /* Light red background on hover */
+  background-color: rgba(231, 76, 60, 0.1);
+  /* Light red background on hover */
 }
 
 /* -------------------- File List (in Content Area) -------------------- */
 .file-list-container {
-  flex: 1; /* Allow list container to grow */
+  flex: 1;
+  /* Allow list container to grow */
   margin-bottom: var(--space-xl);
-  overflow: hidden; /* Manage internal scrolling */
+  overflow: hidden;
+  /* Manage internal scrolling */
   display: flex;
   flex-direction: column;
 }
 
 .file-list {
-  flex: 1; /* Allow list itself to grow */
-  overflow-y: auto; /* Enable vertical scrolling */
+  flex: 1;
+  /* Allow list itself to grow */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
   padding: 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive grid */
-  grid-auto-rows: max-content; /* Adjust row height to content */
-  align-content: start; /* Align items to the top */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  /* Responsive grid */
+  grid-auto-rows: max-content;
+  /* Adjust row height to content */
+  align-content: start;
+  /* Align items to the top */
   gap: 12px;
   background-color: var(--background-primary);
 }
@@ -1549,15 +1623,18 @@ input[type='checkbox'][disabled] {
   padding: 10px;
   border: var(--standard-border);
   border-radius: 4px;
-  position: relative; /* For absolute positioning of actions */
+  position: relative;
+  /* For absolute positioning of actions */
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     border-color 0.2s ease,
     background-color 0.2s ease;
-  height: 80px; /* Fixed height for consistency */
+  height: 80px;
+  /* Fixed height for consistency */
   background-color: var(--background-primary);
-  overflow: hidden; /* Prevent content spillover */
+  overflow: hidden;
+  /* Prevent content spillover */
   animation: scaleIn 0.3s ease-out;
 }
 
@@ -1570,9 +1647,11 @@ input[type='checkbox'][disabled] {
 }
 
 .file-card.selected {
-  border: 2px solid var(--color-primary); /* Use primary color for selection */
+  border: 2px solid var(--color-primary);
+  /* Use primary color for selection */
   background-color: var(--background-selected);
-  padding: 9px; /* Adjust padding to account for thicker border */
+  padding: 9px;
+  /* Adjust padding to account for thicker border */
 }
 
 .file-card-header {
@@ -1595,33 +1674,51 @@ input[type='checkbox'][disabled] {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--text-primary);
-  font-family: var(--font-family-code); /* Use code font for filenames */
+  font-family: var(--font-family-code);
+  /* Use code font for filenames */
 }
 
 .file-card-info {
   display: flex;
   flex-direction: column;
   /* Removed margin-bottom: 0; as it wasn't necessary */
-  flex-grow: 1; /* Allow info to take space if needed */
-  justify-content: center; /* Center info vertically */
+  flex-grow: 1;
+  /* Allow info to take space if needed */
+  justify-content: center;
+  /* Center info vertically */
 }
 
 .file-card-tokens {
   color: var(--text-secondary);
   font-size: 13px;
-  white-space: nowrap; /* Prevent wrapping */
+  white-space: nowrap;
+  /* Prevent wrapping */
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 var(--space-xs); /* Add horizontal padding */
+  padding: 0 var(--space-xs);
+  /* Add horizontal padding */
 }
 
 .file-card-file-size {
   color: var(--text-secondary);
   font-size: 13px;
-  white-space: nowrap; /* Prevent wrapping */
+  white-space: nowrap;
+  /* Prevent wrapping */
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 var(--space-xs); /* Add horizontal padding */
+  padding: 0 var(--space-xs);
+  /* Add horizontal padding */
+}
+
+.file-card-file-size {
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+  /* Prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--space-xs);
+  /* Add horizontal padding */
 }
 
 .file-card-actions {
@@ -1630,9 +1727,11 @@ input[type='checkbox'][disabled] {
   right: 8px;
   display: flex;
   gap: 4px;
-  opacity: 0; /* Hidden by default, show on hover */
+  opacity: 0;
+  /* Hidden by default, show on hover */
   transition: opacity 0.2s ease;
-  z-index: 5; /* Ensure actions are above card content */
+  z-index: 5;
+  /* Ensure actions are above card content */
 }
 
 .file-card:hover .file-card-actions {
@@ -1658,7 +1757,8 @@ input[type='checkbox'][disabled] {
   background-color: var(--hover-color);
   color: var(--color-primary);
   border-color: var(--color-primary);
-  transform: translateY(-1px); /* Subtle lift effect */
+  transform: translateY(-1px);
+  /* Subtle lift effect */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -1673,7 +1773,8 @@ input[type='checkbox'][disabled] {
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: var(--background-primary); /* Match input background */
+  background-color: var(--background-primary);
+  /* Match input background */
   border: var(--standard-border);
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -1694,26 +1795,34 @@ input[type='checkbox'][disabled] {
   top: 50%;
   transform: translateY(-50%);
   color: var(--icon-color);
-  display: flex; /* Use flex for centering if needed */
+  display: flex;
+  /* Use flex for centering if needed */
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* Icon doesn't block input */
+  pointer-events: none;
+  /* Icon doesn't block input */
   z-index: 2;
-  width: 16px; /* Explicit size */
+  width: 16px;
+  /* Explicit size */
   height: 16px;
 }
 
 /* Target the input specifically within .search-bar */
 .search-bar .search-input,
-input[type="search"].search-input, /* Also style direct input if used */
+input[type="search"].search-input,
+/* Also style direct input if used */
 input[type="text"].search-input {
   width: 100%;
-  padding: 8px 32px 8px 36px !important; /* LTRB: Space for icon and clear button */
-  border: none; /* Border is on the parent .search-bar */
-  border-radius: 4px; /* Match parent */
+  padding: 8px 32px 8px 36px !important;
+  /* LTRB: Space for icon and clear button */
+  border: none;
+  /* Border is on the parent .search-bar */
+  border-radius: 4px;
+  /* Match parent */
   font-size: 14px;
   outline: none;
-  background-color: transparent; /* Let parent background show */
+  background-color: transparent;
+  /* Let parent background show */
   color: var(--text-primary);
 }
 
@@ -1721,7 +1830,8 @@ input[type="text"].search-input {
 .search-bar .search-input:focus,
 input[type='search'].search-input:focus,
 input[type='text'].search-input:focus {
-  box-shadow: none; /* Focus is on .search-bar */
+  box-shadow: none;
+  /* Focus is on .search-bar */
 }
 
 .search-clear-btn {
@@ -1736,7 +1846,8 @@ input[type='text'].search-input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Circular button */
+  border-radius: 50%;
+  /* Circular button */
   cursor: pointer;
   z-index: 2;
   opacity: 0.7;
@@ -1748,12 +1859,14 @@ input[type='text'].search-input:focus {
 .search-clear-btn:hover {
   background-color: var(--hover-color);
   opacity: 1;
-  transform: translateY(-50%); /* Keep the same transform as the non-hover state */
+  transform: translateY(-50%);
+  /* Keep the same transform as the non-hover state */
 }
 
 /* -------------------- Sort Dropdown (in Content Header) -------------------- */
 .sort-dropdown {
-  position: relative; /* For absolute positioning of options */
+  position: relative;
+  /* For absolute positioning of options */
 }
 
 .sort-dropdown-button {
@@ -1763,23 +1876,28 @@ input[type='text'].search-input:focus {
   gap: 0px;
   font-size: var(--font-size-md);
   color: var(--text-primary);
-  background: none; /* Make it look less like a standard button */
+  background: none;
+  /* Make it look less like a standard button */
   border: none;
-  padding: 4px 8px; /* Adjust padding */
+  padding: 4px 8px;
+  /* Adjust padding */
   border-radius: 4px;
 }
 
 .sort-options {
   position: absolute;
-  top: calc(100% + 4px); /* Position below the button */
+  top: calc(100% + 4px);
+  /* Position below the button */
   right: 0;
   background-color: var(--background-primary);
   border: var(--standard-border);
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 100; /* Ensure dropdown is above other content */
+  z-index: 100;
+  /* Ensure dropdown is above other content */
   min-width: 180px;
-  padding: 4px 0; /* Add some vertical padding */
+  padding: 4px 0;
+  /* Add some vertical padding */
   /* Add animation if desired */
 }
 
@@ -1788,7 +1906,8 @@ input[type='text'].search-input:focus {
   cursor: pointer;
   transition: background-color 0.2s;
   color: var(--text-primary);
-  display: block; /* Ensure full width clickable */
+  display: block;
+  /* Ensure full width clickable */
   white-space: nowrap;
 }
 
@@ -1800,14 +1919,16 @@ input[type='text'].search-input:focus {
   /* Class added via JS */
   background-color: var(--background-selected);
   font-weight: 600;
-  color: var(--color-primary); /* Highlight active option */
+  color: var(--color-primary);
+  /* Highlight active option */
 }
 
 /* -------------------- User Instructions (in Content Area) -------------------- */
 .user-instructions-container {
   padding: var(--space-md) var(--space-lg);
   background-color: var(--background-primary);
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
+  /* Prevent shrinking */
 }
 
 .user-instructions {
@@ -1817,16 +1938,20 @@ input[type='text'].search-input:focus {
 
 .user-instructions textarea {
   width: 100%;
-  min-height: 126px; /* Minimum height, can grow */
+  min-height: 126px;
+  /* Minimum height, can grow */
   padding: 12px;
   border: var(--standard-border);
   border-radius: 4px;
-  background-color: var(--background-secondary); /* Slightly different background */
+  background-color: var(--background-secondary);
+  /* Slightly different background */
   color: var(--text-primary);
-  font-family: var(--font-family-ui); /* Use UI font */
+  font-family: var(--font-family-ui);
+  /* Use UI font */
   font-size: 14px;
   line-height: 1.5;
-  resize: vertical; /* Allow vertical resize */
+  resize: vertical;
+  /* Allow vertical resize */
   transition:
     border-color 0.2s,
     box-shadow 0.2s,
@@ -1837,7 +1962,8 @@ input[type='text'].search-input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 1px var(--color-primary);
   outline: none;
-  background-color: var(--background-primary); /* Change background on focus */
+  background-color: var(--background-primary);
+  /* Change background on focus */
 }
 
 .user-instructions textarea::placeholder {
@@ -1847,15 +1973,21 @@ input[type='text'].search-input:focus {
 /* -------------------- Copy Button Area (in Content Area) -------------------- */
 .copy-button-container {
   padding: var(--space-xl);
-  padding-bottom: var(--space-xl); /* Increased bottom padding */
+  padding-bottom: var(--space-xl);
+  /* Increased bottom padding */
   border-top: var(--standard-border);
   display: flex;
-  flex-direction: row; /* Changed from column to row */
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center horizontally */
+  flex-direction: row;
+  /* Changed from column to row */
+  align-items: center;
+  /* Center items vertically */
+  justify-content: center;
+  /* Center horizontally */
   background-color: var(--background-primary);
-  flex-shrink: 0; /* Prevent shrinking */
-  gap: var(--space-md); /* Horizontal gap between elements */
+  flex-shrink: 0;
+  /* Prevent shrinking */
+  gap: var(--space-md);
+  /* Horizontal gap between elements */
 }
 
 /* Optional: Add a label for the copy button */
@@ -1864,7 +1996,8 @@ input[type='text'].search-input:focus {
   align-items: center;
   color: var(--text-secondary);
   font-size: 14px;
-  margin-right: var(--space-sm); /* Add some spacing to the right */
+  margin-right: var(--space-sm);
+  /* Add some spacing to the right */
   /* Add styles as needed */
 }
 
@@ -1878,7 +2011,8 @@ input[type='text'].search-input:focus {
   transition: all 0.2s ease;
   flex-shrink: 0;
   gap: 8px;
-  border: none; /* Primary button style often has no border */
+  border: none;
+  /* Primary button style often has no border */
   cursor: pointer;
   color: var(--primary-button-text);
   background-color: var(--primary-button-background);
@@ -1887,13 +2021,16 @@ input[type='text'].search-input:focus {
 
 .copy-button:hover:not(:disabled) {
   /* Slightly darken or lighten based on theme */
-  filter: brightness(1.1); /* Example */
+  filter: brightness(1.1);
+  /* Example */
 }
 
 .copy-button.full-width {
   /* Modified for side-by-side layout */
-  width: auto; /* Changed from 100% to auto */
-  max-width: none; /* Remove max-width limitation */
+  width: auto;
+  /* Changed from 100% to auto */
+  max-width: none;
+  /* Remove max-width limitation */
 }
 
 .copy-button.copied {
@@ -1903,11 +2040,13 @@ input[type='text'].search-input:focus {
 }
 
 @keyframes flash-success {
+
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.02);
@@ -1926,7 +2065,8 @@ input[type='text'].search-input:focus {
   color: var (--success-color);
   font-weight: 500;
   font-size: 14px;
-  margin-left: 16px; /* Space from button */
+  margin-left: 16px;
+  /* Space from button */
 }
 
 .copy-status.visible {
@@ -1942,15 +2082,18 @@ input[type='text'].search-input:focus {
   gap: 12px;
   padding: 12px;
   background-color: var(--background-secondary);
-  border-bottom: var(--standard-border); /* Or top, depending on placement */
+  border-bottom: var(--standard-border);
+  /* Or top, depending on placement */
   flex-shrink: 0;
 }
 
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--text-secondary); /* Base color */
-  border-top-color: transparent; /* Make one side transparent */
+  border: 2px solid var(--text-secondary);
+  /* Base color */
+  border-top-color: transparent;
+  /* Make one side transparent */
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -1964,7 +2107,8 @@ input[type='text'].search-input:focus {
 .cancel-btn {
   padding: 4px 12px;
   font-size: 13px;
-  background-color: #e74c3c; /* Changed from var(--error-color) to solid red */
+  background-color: #e74c3c;
+  /* Changed from var(--error-color) to solid red */
   color: white;
   border: none;
   border-radius: 4px;
@@ -1991,7 +2135,8 @@ input[type='text'].search-input:focus {
   color: white;
   padding: var(--standard-padding);
   border-radius: 4px;
-  margin: 24px; /* Example margin */
+  margin: 24px;
+  /* Example margin */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2017,7 +2162,8 @@ input[type='text'].search-input:focus {
   border-radius: 8px;
   /* Create inset effect */
   border: 2px solid var(--scrollbar-track);
-  background-clip: padding-box; /* Clip background to padding box */
+  background-clip: padding-box;
+  /* Clip background to padding box */
   transition:
     background-color 0.2s ease,
     border-width 0.2s ease;
@@ -2025,19 +2171,23 @@ input[type='text'].search-input:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
-  border: 2px solid var(--scrollbar-track); /* Keep border consistent */
+  border: 2px solid var(--scrollbar-track);
+  /* Keep border consistent */
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--scrollbar-track); /* Match track background */
+  background: var(--scrollbar-track);
+  /* Match track background */
 }
 
 /* -------------------- Firefox -------------------- */
 /* Apply scrollbar styles globally or to specific scrollable elements */
 * {
-  scrollbar-width: auto; /* Or 'auto' or 'none' */
-  scrollbar-color: var(--scrollbar-thumb) var (--scrollbar-track); /* thumb track */
+  scrollbar-width: auto;
+  /* Or 'auto' or 'none' */
+  scrollbar-color: var(--scrollbar-thumb) var (--scrollbar-track);
+  /* thumb track */
 }
 
 /* -------------------- Thin Scrollbars for Specific Areas -------------------- */
@@ -2050,7 +2200,8 @@ textarea::-webkit-scrollbar {
 .file-tree::-webkit-scrollbar-thumb,
 .file-list::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb {
-  border-width: 0px; /* Adjust border for thinner scrollbar */
+  border-width: 0px;
+  /* Adjust border for thinner scrollbar */
 }
 
 /* Firefox thin scrollbar (already handled by global `scrollbar-width: thin;`) */
@@ -2063,17 +2214,21 @@ textarea::-webkit-scrollbar-thumb {
 
 /* Specific element overrides for better contrast/appearance in dark mode */
 .dark-mode .file-card {
-  border-color: var(--border-color); /* Use dark mode border color */
+  border-color: var(--border-color);
+  /* Use dark mode border color */
   background-color: var(--background-secondary);
 }
 
 .dark-mode .file-card:hover {
-  background-color: var(--hover-color); /* Use dark mode hover color */
-  border-color: #444444; /* Slightly lighter border on hover */
+  background-color: var(--hover-color);
+  /* Use dark mode hover color */
+  border-color: #444444;
+  /* Slightly lighter border on hover */
 }
 
 .dark-mode .file-card.selected {
-  border-color: var(--color-primary); /* Keep selection color consistent */
+  border-color: var(--color-primary);
+  /* Keep selection color consistent */
   background-color: var(--background-selected);
 }
 
@@ -2095,34 +2250,39 @@ textarea::-webkit-scrollbar-thumb {
 .dark-mode .processing-indicator,
 .dark-mode .file-card-action,
 .dark-mode .sort-dropdown-button,
-.dark-mode input[type="checkbox"], /* Style checkboxes if needed */
+.dark-mode input[type="checkbox"],
+/* Style checkboxes if needed */
 .dark-mode .theme-segmented-control {
   border-color: var(--border-color);
 }
 
 /* Specific background/color adjustments */
 .dark-mode .selected-folder {
-  background-color: #2d2d2d; /* Slightly different shade */
+  background-color: #2d2d2d;
+  /* Slightly different shade */
 }
 
 .dark-mode .tree-item:hover {
-  background-color: #2c2c2c; /* Darker hover for tree items */
+  background-color: #2c2c2c;
+  /* Darker hover for tree items */
 }
 
 /* Dark mode badge overrides */
 .dark-mode .tree-item-badge {
-  background-color: #333333; /* Default dark background */
-  color: #bbbbbb; /* Default dark text */
+  background-color: #333333;
+  /* Default dark background */
+  color: #bbbbbb;
+  /* Default dark text */
 }
 
 .dark-mode .tree-item-badge-binary-file {
-  background-color: rgba(
-    165,
-    42,
-    42,
-    0.6
-  ); /* Slightly lighter red with reduced opacity for dark mode */
-  color: #ffffff; /* White text */
+  background-color: rgba(165,
+      42,
+      42,
+      0.6);
+  /* Slightly lighter red with reduced opacity for dark mode */
+  color: #ffffff;
+  /* White text */
 }
 
 /* Folder badge inherits default dark mode colors but keeps italic */
@@ -2131,14 +2291,16 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .dark-mode .file-card-action {
-  background-color: var(--hover-color); /* Darker action button background */
+  background-color: var(--hover-color);
+  /* Darker action button background */
 }
 
 .dark-mode .file-card-action:hover {
   color: var(--color-primary-light);
   background-color: var(--hover-color);
   border-color: var(--color-primary);
-  transform: translateY(-1px); /* Subtle lift effect */
+  transform: translateY(-1px);
+  /* Subtle lift effect */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -2151,8 +2313,10 @@ textarea::-webkit-scrollbar-thumb {
 .dark-mode input[type='text']:focus,
 .dark-mode input[type='search']:focus,
 .dark-mode .user-instructions textarea:focus {
-  border-color: var(--color-primary); /* Use primary color for focus */
-  background-color: #252526; /* Slightly darker background on focus */
+  border-color: var(--color-primary);
+  /* Use primary color for focus */
+  background-color: #252526;
+  /* Slightly darker background on focus */
   box-shadow: var(--focus-ring);
 }
 
@@ -2161,16 +2325,19 @@ textarea::-webkit-scrollbar-thumb {
 .dark-mode input[type='text'],
 .dark-mode input[type='search'] {
   color: var(--text-primary);
-  caret-color: var(--text-primary); /* Ensure caret is visible */
+  caret-color: var(--text-primary);
+  /* Ensure caret is visible */
 }
 
 .dark-mode textarea::placeholder {
-  color: var(--text-disabled); /* Use disabled text color for placeholder */
+  color: var(--text-disabled);
+  /* Use disabled text color for placeholder */
 }
 
 /* Theme toggle active state */
 .dark-mode .theme-segment.active {
-  background-color: #3e3e42; /* Darker active background */
+  background-color: #3e3e42;
+  /* Darker active background */
 }
 
 /* Scrollbar overrides for dark mode (Webkit) */
@@ -2216,7 +2383,8 @@ label {
 /* Ensure container backgrounds are correct */
 .dark-mode .user-instructions-container {
   background-color: var(--background-primary);
-  border-radius: 0; /* Remove if causing issues */
+  border-radius: 0;
+  /* Remove if causing issues */
 }
 
 .dark-mode .user-instructions textarea {
@@ -2225,7 +2393,8 @@ label {
 
 /* Final check on copy button label color */
 .dark-mode .copy-button-container label {
-  color: var(--text-secondary); /* Use secondary text color */
+  color: var(--text-secondary);
+  /* Use secondary text color */
 }
 
 /* ==========================================================================
@@ -2237,6 +2406,7 @@ label {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -2248,6 +2418,7 @@ label {
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -2260,6 +2431,7 @@ label {
     transform: translateY(20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -2272,6 +2444,7 @@ label {
     transform: scale(0.95);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -2283,9 +2456,11 @@ label {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   100% {
     transform: scale(1);
   }
@@ -2305,6 +2480,7 @@ label {
     transform: translateX(-20px);
     opacity: 0.9;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -2329,6 +2505,7 @@ label {
   0% {
     background-color: var(--success-color);
   }
+
   100% {
     background-color: transparent;
   }
@@ -2391,7 +2568,8 @@ button:not(.text-button):active::after {
 .search-clear-btn:hover {
   background-color: var(--hover-color);
   opacity: 1;
-  transform: translateY(-50%); /* Keep the same transform as the non-hover state */
+  transform: translateY(-50%);
+  /* Keep the same transform as the non-hover state */
 }
 
 /* Checkbox smooth transition */
@@ -2436,7 +2614,8 @@ body {
 /* Small screens (mobile) */
 @media (max-width: 768px) {
   .sidebar {
-    width: 250px; /* Narrower sidebar on small screens */
+    width: 250px;
+    /* Narrower sidebar on small screens */
   }
 
   .file-list {
@@ -2459,7 +2638,8 @@ body {
   }
 
   .file-list {
-    grid-template-columns: 1fr; /* Stack cards on very small screens */
+    grid-template-columns: 1fr;
+    /* Stack cards on very small screens */
   }
 
   .header-actions {
@@ -2538,7 +2718,8 @@ button:hover svg.lucide {
 
 /* -------------------- Fix Ignore Filter Button Spacing -------------------- */
 .view-ignores-button {
-  margin-right: var(--space-lg); /* Add right margin */
+  margin-right: var(--space-lg);
+  /* Add right margin */
   padding: var(--space-sm) var(--space-md);
 }
 
@@ -2546,9 +2727,11 @@ button:hover svg.lucide {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Reduced gap from 12px to 10px */
+  gap: 10px;
+  /* Reduced gap from 12px to 10px */
   width: 100%;
-  max-width: 380px; /* Reduced from 400px */
+  max-width: 380px;
+  /* Reduced from 400px */
 }
 
 .file-tree-option {
@@ -2557,7 +2740,8 @@ button:hover svg.lucide {
   gap: 8px;
   cursor: pointer;
   user-select: none;
-  font-size: 13px; /* Slightly smaller font */
+  font-size: 13px;
+  /* Slightly smaller font */
 }
 
 .copy-button-main {
@@ -2566,30 +2750,37 @@ button:hover svg.lucide {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 10px 18px; /* Reduced padding from 12px 20px */
+  padding: 10px 18px;
+  /* Reduced padding from 12px 20px */
   height: auto;
-  min-height: 44px; /* Reduced from 48px */
+  min-height: 44px;
+  /* Reduced from 48px */
 }
 
 .copy-button-text {
-  font-size: 13px; /* Reduced from 14px */
-  letter-spacing: 0.3px; /* Reduced letter spacing */
+  font-size: 13px;
+  /* Reduced from 14px */
+  letter-spacing: 0.3px;
+  /* Reduced letter spacing */
 }
 
 /* Add responsive adjustments for the copy button on different screen sizes */
 @media (max-width: 1200px) {
   .copy-button-wrapper {
-    max-width: 330px; /* Reduced from 350px */
+    max-width: 330px;
+    /* Reduced from 350px */
   }
 }
 
 @media (max-width: 768px) {
   .copy-button-wrapper {
-    max-width: 280px; /* Reduced from 300px */
+    max-width: 280px;
+    /* Reduced from 300px */
   }
 
   .copy-button-text {
-    font-size: 12px; /* Reduced from 13px */
+    font-size: 12px;
+    /* Reduced from 13px */
   }
 }
 
@@ -2620,13 +2811,17 @@ button:hover svg.lucide {
     font-size: 13px;
   }
 }
+
 .custom-global-ignores .custom-ignore-list h4 {
-  margin-left: var(--space-lg); /* Added margin left using space variable */
-  margin-right: var(--space-lg); /* Added margin right using space variable */
+  margin-left: var(--space-lg);
+  /* Added margin left using space variable */
+  margin-right: var(--space-lg);
+  /* Added margin right using space variable */
   margin-bottom: 8px;
   font-size: 15px;
   color: var(--text-primary);
-  padding: 10px 12px; /* Increased padding top and bottom from 6px to 10px */
+  padding: 10px 12px;
+  /* Increased padding top and bottom from 6px to 10px */
   transition: all 0.2s ease;
   display: inline-block;
   border: 2px solid transparent;
@@ -2638,17 +2833,21 @@ button:hover svg.lucide {
 .custom-global-ignores .custom-ignore-list h4:focus-visible {
   outline: none;
   background-color: var(--background-primary);
-  box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.3); /* Blue focus ring */
+  box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.3);
+  /* Blue focus ring */
   transform: translateY(-2px);
 }
 
 /* Dark mode text color is already handled by var(--text-primary) which changes based on theme */
 
 .custom-global-ignores h4 {
-  margin-left: var(--space-md); /* Added margin left using space variable */
-  margin-right: var(--space-md); /* Added margin right using space variable */
+  margin-left: var(--space-md);
+  /* Added margin left using space variable */
+  margin-right: var(--space-md);
+  /* Added margin right using space variable */
   margin-bottom: 10;
-  padding: 12px 12px; /* Increased padding top and bottom from 8px to 12px */
+  padding: 12px 12px;
+  /* Increased padding top and bottom from 8px to 12px */
   font-size: 16px;
   font-weight: 600;
   color: var(--text-primary);
@@ -2672,14 +2871,19 @@ button:hover svg.lucide {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* High z-index to be on top */
-  animation: fadeIn 0.2s ease-out; /* Fade in animation */
-  backdrop-filter: blur(2px); /* Slight blur effect for depth */
-  transition: opacity 0.2s ease; /* Smooth transition when closing */
+  z-index: 1000;
+  /* High z-index to be on top */
+  animation: fadeIn 0.2s ease-out;
+  /* Fade in animation */
+  backdrop-filter: blur(2px);
+  /* Slight blur effect for depth */
+  transition: opacity 0.2s ease;
+  /* Smooth transition when closing */
 }
 
 .file-preview-modal {
@@ -2687,17 +2891,24 @@ button:hover svg.lucide {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 80%; /* Adjust as needed */
-  max-width: 1000px; /* Max width */
-  max-height: 80vh; /* Max height, viewport relative */
+  width: 80%;
+  /* Adjust as needed */
+  max-width: 1000px;
+  /* Max width */
+  max-height: 80vh;
+  /* Max height, viewport relative */
   display: flex;
   flex-direction: column;
-  animation: scaleIn 0.25s ease-out; /* Scale in animation */
-  transform-origin: center; /* Scale from center */
-  will-change: transform, opacity; /* Optimization for animations */
+  animation: scaleIn 0.25s ease-out;
+  /* Scale in animation */
+  transform-origin: center;
+  /* Scale from center */
+  will-change: transform, opacity;
+  /* Optimization for animations */
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease; /* For closing animations */
+    opacity 0.2s ease;
+  /* For closing animations */
 }
 
 .file-preview-modal-header {
@@ -2711,25 +2922,31 @@ button:hover svg.lucide {
 
 .file-preview-tabs {
   display: flex;
-  overflow-x: auto; /* Allow horizontal scrolling for tabs */
-  padding-bottom: 4px; /* Add some space for the scrollbar */
+  overflow-x: auto;
+  /* Allow horizontal scrolling for tabs */
+  padding-bottom: 4px;
+  /* Add some space for the scrollbar */
 }
 
 .file-preview-tab {
   padding: 8px 12px;
-  margin-right: 4px; /* Add some space */
+  margin-right: 4px;
+  /* Add some space */
   border: 1px solid var(--border-color);
   border-radius: 4px 4px 0 0;
   background-color: var(--background-secondary);
   cursor: pointer;
-  white-space: nowrap; /* Prevent tab text from wrapping */
-  font-size: 13px; /* Use consistent font size */
+  white-space: nowrap;
+  /* Prevent tab text from wrapping */
+  font-size: 13px;
+  /* Use consistent font size */
 }
 
 .file-preview-tab.active {
   background: var(--background-primary);
   border: 1px solid var(--border-color);
-  border-bottom: 2px solid var(--color-primary); /* Highlight active tab */
+  border-bottom: 2px solid var(--color-primary);
+  /* Highlight active tab */
   color: var(--text-primary);
   font-weight: 500;
   padding: 8px 12px;
@@ -2769,17 +2986,22 @@ button:hover svg.lucide {
 
 .file-preview-modal-content {
   padding: 16px;
-  overflow: hidden; /* Hide overflow, let child handle scrolling */
-  flex: 1; /* Grow to fill available space */
+  overflow: hidden;
+  /* Hide overflow, let child handle scrolling */
+  flex: 1;
+  /* Grow to fill available space */
 }
 
 .file-preview-code-container {
-  overflow: auto; /* Enable both horizontal and vertical scrolling */
-  max-height: calc(80vh - 120px); /* Reduced height to ensure space at bottom */
+  overflow: auto;
+  /* Enable both horizontal and vertical scrolling */
+  max-height: calc(80vh - 120px);
+  /* Reduced height to ensure space at bottom */
   border: 1px solid var(--border-color);
   border-radius: 4px;
   background-color: var(--background-secondary);
-  position: relative; /* For padding pseudo-element */
+  position: relative;
+  /* For padding pseudo-element */
 }
 
 .file-preview-code-spacer {
@@ -2789,16 +3011,24 @@ button:hover svg.lucide {
 
 .file-preview-code {
   margin: 0;
-  padding: 20px; /* Increased padding on all sides */
-  white-space: pre; /* Preserve spacing and line breaks */
-  font-family: var(--font-family-code); /* Use monospace font */
+  padding: 20px;
+  /* Increased padding on all sides */
+  white-space: pre;
+  /* Preserve spacing and line breaks */
+  font-family: var(--font-family-code);
+  /* Use monospace font */
   font-size: 13px;
   line-height: 1.5;
-  tab-size: 4; /* Set tab size to 4 spaces */
-  -moz-tab-size: 4; /* Firefox support */
-  display: inline-block; /* Change to inline-block to contain content */
-  min-width: 100%; /* Ensure it takes full width */
-  box-sizing: border-box; /* Include padding in the width calculation */
+  tab-size: 4;
+  /* Set tab size to 4 spaces */
+  -moz-tab-size: 4;
+  /* Firefox support */
+  display: inline-block;
+  /* Change to inline-block to contain content */
+  min-width: 100%;
+  /* Ensure it takes full width */
+  box-sizing: border-box;
+  /* Include padding in the width calculation */
 }
 
 /* Ensure monospace utility class is defined */
@@ -2806,7 +3036,9 @@ button:hover svg.lucide {
   font-family: var(--font-family-code);
   font-size: 13px;
   line-height: 1.5;
-  tab-size: 4; /* Set tab size to 4 spaces */
-  -moz-tab-size: 4; /* Firefox support */
+  tab-size: 4;
+  /* Set tab size to 4 spaces */
+  -moz-tab-size: 4;
+  /* Firefox support */
   overflow: hidden;
 }

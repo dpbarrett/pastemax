@@ -1,30 +1,69 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2020", // Specify ECMAScript target version
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ], // Libraries to include
+    "module": "ESNext", // Specify module code generation
+    "skipLibCheck": true, // Skip type checking of declaration files
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
+    "moduleResolution": "bundler", // Strategy for resolving modules
+    "allowImportingTsExtensions": true, // Allow `.ts` extensions in imports
+    "resolveJsonModule": true, // Include modules imported from .json files
+    "isolatedModules": true, // Ensure that each file can be safely transpiled without relying on other files
+    "noEmit": true, // Do not emit output files (handled by Vite)
+    "jsx": "react-jsx", // Support JSX in `.tsx` files
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-
+    "strict": true, // Enable all strict type-checking options
+    "noUnusedLocals": true, // Report errors on unused locals
+    "noUnusedParameters": true, // Report errors on unused parameters
+    "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
     /* Additional Options */
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    // Enable this if you need stricter checks, but might require code adjustments
+    // "noImplicitAny": true,
+    // "strictNullChecks": true,
+    // "strictFunctionTypes": true,
+    // "strictBindCallApply": true,
+    // "strictPropertyInitialization": true,
+    // "noImplicitThis": true,
+    // "alwaysStrict": true,
+    // Path Aliases (should match vite.config.ts)
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ] // Alias for the src directory
+    },
+    "baseUrl": "." // Base directory to resolve non-relative module names
   },
-  "include": ["src", "src/declarations.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src",
+    "src/declarations.d.ts"
+  ],
+  "exclude": [
+    "node_modules", // Exclude node_modules
+    "dist", // Exclude build output
+    "release", // Exclude build output
+    "release-builds", // Exclude build output
+    "build", // Exclude build output
+    "electron", // Exclude electron main process files (they have their own tsconfig)
+    "**/*.spec.ts", // Exclude Jest test files (unless included by a separate test tsconfig)
+    "**/*.test.ts", // Exclude Jest test files
+    "**/*.spec.tsx", // Exclude Jest test files
+    "**/*.test.tsx", // Exclude Jest test files
+    "cypress" // Exclude Cypress E2E test files
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./electron/tsconfig.json"
+    } // Reference the electron tsconfig
+  ]
 }

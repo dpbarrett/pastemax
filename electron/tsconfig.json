@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        // Project Options
+        "target": "ES2020", // Target a recent ECMAScript version compatible with Electron's Node.js version
+        "lib": [
+            "ES2020"
+        ], // Specify library files to be included
+        "module": "CommonJS", // Use CommonJS module system for Node.js environment
+        "outDir": "../dist/electron", // Output directory for compiled JavaScript files relative to this tsconfig
+        "esModuleInterop": true, // Emit additional JavaScript to ease support for importing CommonJS modules
+        "forceConsistentCasingInFileNames": true, // Ensure that casing is consistent throughout a file
+        "skipLibCheck": true, // Skip type checking of declaration files
+        // Type Checking Options
+        "strict": true, // Enable all strict type-checking options
+        "noUnusedLocals": true, // Report errors on unused locals
+        "noUnusedParameters": true, // Report errors on unused parameters
+        "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
+        "composite": true, // Enable composite projects
+        // Module Resolution Options (Optional, depending on specific needs)
+        // "moduleResolution": "node",
+        // Enable this if you need stricter checks
+        // "noImplicitAny": true,
+        // "strictNullChecks": true,
+        // "strictFunctionTypes": true,
+        // "strictBindCallApply": true,
+        // "strictPropertyInitialization": true,
+        // "noImplicitThis": true,
+        // "alwaysStrict": true,
+    },
+    "include": [
+        "*.ts", // Include all .ts files in the electron directory
+        "**/*.ts" // Include .ts files in subdirectories of electron
+    ],
+    "exclude": [
+        "../node_modules", // Exclude node_modules
+        "../dist", // Exclude build output directories
+        "../release", // Exclude build output directories
+        "../release-builds", // Exclude build output directories
+        "../build", // Exclude build output directories
+        "../src", // Exclude renderer process source code
+        "**/*.spec.ts", // Exclude Jest test files (unless included by a separate test tsconfig)
+        "**/*.test.ts" // Exclude Jest test files
+    ],
+    "references": [
+        {
+            "path": "../tsconfig.json"
+        } // Reference the root tsconfig for shared settings/project-wide type checking
+    ]
+}

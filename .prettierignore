@@ -1,12 +1,12 @@
 # Dependencies
-node_modules
+node_modules/
 .pnpm-store
 
 # Build outputs
-dist
-build
+dist/
+build/
 src-tauri/target
-release-builds
+release-builds/
 coverage
 
 # Generated files
@@ -44,3 +44,20 @@ pnpm-lock.yaml
 *.map
 electron/out
 .eslintrc.cjs
+
+# Ignore configuration files that should not be formatted
+.eslintrc.js
+.prettierrc.js
+
+# Ignore Electron build/dev scripts
+electron/build.js
+electron/dev.js
+
+# Ignore generated files (if any)
+# e.g., src/generated/
+
+# Ignore log files (if any)
+# e.g., *.log
+
+# Ignore specific test helper files if they contain non-standard patterns
+# e.g., src/tests/test-utils/

@@ -1,0 +1,23 @@
+# Ignore built files and directories
+dist/
+release/
+
+# Ignore dependency directory
+node_modules/
+
+# Ignore configuration files that don't need linting
+.eslintrc.js
+.prettierrc.js
+
+# Ignore Electron build/dev scripts as they might have different conventions or be temporary
+electron/build.js
+electron/dev.js
+
+# Ignore generated files (if any)
+# e.g., src/generated/
+
+# Ignore log files (if any)
+# e.g., *.log
+
+# Ignore specific test helper files if they contain non-standard patterns
+# e.g., src/tests/test-utils/

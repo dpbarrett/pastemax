@@ -1,16 +1,35 @@
 {
   "name": "pastemax",
   "version": "v1.0.1-stable",
-  "main": "electron/main.js",
+  "description": "A modern file viewer application for developers to easily navigate, search, and copy code from repositories.",
+  "main": "./electron/main.js",
+  "author": {
+    "name": "kleneway",
+    "email": "kleneway@notreal.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/kleneway/pastemax",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kleneway/pastemax.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kleneway/pastemax/issues"
+  },
   "scripts": {
     "start": "electron .",
-    "dev": "vite",
-    "dev:electron": "node electron/dev.js",
-    "build": "vite build",
-    "build:electron": "node electron/build.js",
+    "dev": "concurrently \"cross-env BROWSER=none vite\" \"wait-on tcp:5173 && npm run dev:electron\"",
+    "dev:electron": "cross-env NODE_ENV=development electron .",
+    "build:renderer": "vite build",
+    "build:electron": "cross-env NODE_ENV=production tsc -p electron",
+    "build": "npm run build:renderer && npm run build:electron && electron-builder && npm run set-build-date",
+    "set-build-date": "node scripts/set-build-date.js",
     "clean": "rimraf dist release-builds",
     "clean:all": "rimraf dist release-builds node_modules",
     "verify-build": "node scripts/verify-build.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:e2e": "cypress open",
     "test-build": "node scripts/test-local-build.js",
     "test-build:mac": "node scripts/test-local-build.js mac",
     "test-build:win": "node scripts/test-local-build.js win",
@@ -21,14 +40,16 @@
     "package:win": "vite build && electron-builder --win --publish=never",
     "package:linux": "vite build && electron-builder --linux --publish=never",
     "package:all": "vite build && electron-builder -mwl --publish=never",
-    "release": "vite build && electron-builder --publish=onTagOrDraft",
-    "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives",
+    "release": "vite run build && electron-builder --publish=onTagOrDraft",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx --report-unused-disable-directives src electron",
     "lint:strict": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --fix",
+    "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "update:all": "npm update --save && npm update --save-dev",
     "format:all": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
     "clipboard",
@@ -37,21 +58,11 @@
     "electron",
     "file-viewer"
   ],
-  "author": {
-    "name": "kleneway",
-    "email": "kleneway@notreal.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kleneway/pastemax"
-  },
-  "homepage": "https://kleneway.github.io/pastemax",
-  "description": "A modern file viewer application for developers to easily navigate, search, and copy code from repositories.",
   "build": {
     "appId": "com.kleneway.pastemax",
     "productName": "PasteMax",
     "directories": {
+      "buildResources": "assets",
       "output": "release-builds"
     },
     "files": [
@@ -101,12 +112,15 @@
   },
   "devDependencies": {
     "@electron/notarize": "^2.5.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.17.30",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.4.1",
+    "cross-env": "^7.0.3",
+    "cypress": "^13.8.1",
     "electron": "^34.5.2",
     "electron-builder": "^24.13.3",
     "esbuild": "^0.25.2",
@@ -114,13 +128,18 @@
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "jest": "^29.7.0",
     "prettier": "^3.5.3",
+    "react-testing-library": "^8.0.1",
     "rimraf": "^5.0.10",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.8.3",
     "vite": "^6.3.4"
   },
   "dependencies": {
     "chokidar": "^3.6.0",
+    "electron-store": "^8.1.0",
+    "esprima": "^4.0.1",
     "gpt-3-encoder": "^1.1.4",
     "ignore": "^7.0.3",
     "lucide-react": "^0.477.0",
